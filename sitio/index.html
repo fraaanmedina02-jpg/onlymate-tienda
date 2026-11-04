@@ -297,6 +297,16 @@ button,a,.btn{-webkit-tap-highlight-color:transparent}
 .cartbar:focus-visible{outline:2px solid var(--fg);outline-offset:3px}
 @starting-style{.cartbar{opacity:0;transform:translateY(8px)}}
 @media (min-width:860px){.cartbar{left:auto;right:1.5rem;width:340px}}
+/* 44 px en todo lo que se toca */
+html{touch-action:manipulation}
+nav.top a{display:inline-flex;align-items:center;min-height:44px}
+header a[aria-label]{display:inline-flex;align-items:center;min-height:44px}
+.cartbtn,.ga2,.fsoc a,.x{width:2.75rem;height:2.75rem}
+.step{height:2.75rem}.step button{width:2.75rem}.buy .btn{height:2.75rem}
+.chips a{display:inline-flex;align-items:center;min-height:44px;padding:0 1rem}
+.pay label{min-height:44px;padding:.2rem 0}.fld input{min-height:44px}
+.ctl .rm{min-height:44px;padding:0 .2rem}.ctl .rm::before{display:none}.clr{min-height:44px}
+.pt{display:block;width:100%;text-align:left;padding-block:.7rem;margin-block:-.7rem}
 body.hasbar{padding-bottom:5.5rem}
 @media (prefers-reduced-motion:reduce){.cartbar{transition:none}.cartbar:active{transform:none;opacity:.7}@starting-style{.cartbar{opacity:1;transform:none}}}
 </style>
