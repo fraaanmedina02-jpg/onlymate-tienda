@@ -493,6 +493,10 @@ document.addEventListener("keydown",function(e){if(e.key!=="Tab")return;var c=do
  if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}});
 function uiSync(){var u=uiNow();if(u==="cart"){hideP();showCart()}else if(u==="pm"){hideCart();showP(history.state.i)}else{hideP();hideCart()}}
 window.addEventListener("popstate",uiSync);
+(function(){var o=location.origin,l=document.createElement("link");l.rel="canonical";l.href=o+location.pathname;document.head.appendChild(l);
+ var d=[{"@context":"https://schema.org","@type":"OnlineStore","name":"OnlyMate","url":o+"/","logo":o+"/img/logo-264.webp","image":o+"/og.jpg","description":document.querySelector("meta[name=description]").content,"sameAs":["https://instagram.com/"+INSTAGRAM,"https://www.tiktok.com/@"+TIKTOK],"areaServed":"AR","address":{"@type":"PostalAddress","addressLocality":"Neuquén Capital","addressCountry":"AR"}}];
+ PRODUCTOS.forEach(function(x){if(x.c==="Servicios")return;d.push({"@context":"https://schema.org","@type":"Product","name":x.n,"description":x.d,"image":o+"/"+foto(x.img,800),"offers":{"@type":"Offer","price":num(x.p),"priceCurrency":"ARS","url":o+"/?p="+slugP(x.n)}})});
+ var s=document.createElement("script");s.type="application/ld+json";s.textContent=JSON.stringify(d);document.head.appendChild(s)})();
 render();paintBuy();uiSync();
 if(!uiNow()&&location.search){var pQ=new URLSearchParams(location.search).get("p"),pI=-1;PRODUCTOS.forEach(function(x,j){if(slugP(x.n)===pQ)pI=j});history.replaceState(null,"",location.pathname);if(pI>=0)openP(pI)}
 </script>
