@@ -327,7 +327,7 @@ button,a,.btn{-webkit-tap-highlight-color:transparent}
 <div class="dh"><h2>Tu carrito</h2><button class="x" id="cartClose" type="button" aria-label="Cerrar carrito">✕</button></div>
 <div class="cbody"><div id="cartList"></div>
 <div class="df" id="cartForm"><fieldset class="pay"><legend>Entrega</legend>
-<label><input type="radio" name="dm" value="retiro" checked> Punto de encuentro en Neuquén Capital</label>
+<label><input type="radio" name="dm" value="retiro"> Punto de encuentro en Neuquén Capital</label>
 <label><input type="radio" name="dm" value="correo"> Envío por Correo Argentino o Andreani</label></fieldset>
 <div class="pbox" id="dbox"><label class="fld">Nombre y apellido<input id="fNom" autocomplete="name" required></label><label class="fld">Dirección<input id="fDir" autocomplete="street-address" required></label><label class="fld">Localidad y provincia<input id="fLoc" autocomplete="address-level2" required></label><label class="fld">Código postal<input id="fCp" inputmode="numeric" autocomplete="postal-code" required></label></div>
 <fieldset class="pay"><legend>Forma de pago</legend>
@@ -365,7 +365,7 @@ function num(p){return parseInt(String(p).replace(/\D/g,""),10)||0}
 function fmt(n){return "$"+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".")}
 var drawer=document.getElementById("drawer"),ov=document.getElementById("ov"),list=document.getElementById("cartList"),send=document.getElementById("cartSend");
 function pm(){return document.querySelector('input[name=pm]:checked').value}
-function dm(){return document.querySelector('input[name=dm]:checked').value}
+function dm(){var r=document.querySelector('input[name=dm]:checked');return r?r.value:""}
 function v(id){return (document.getElementById(id).value||"").trim()}
 function delText(){if(dm()==="retiro")return "Entrega: punto de encuentro en Neuquén Capital";var a=["Entrega: envío por Correo Argentino o Andreani"];if(v("fNom"))a.push("Nombre: "+v("fNom"));if(v("fDir"))a.push("Dirección: "+v("fDir"));if(v("fLoc"))a.push("Localidad: "+v("fLoc"));if(v("fCp"))a.push("CP: "+v("fCp"));return a.join("\n")}
 function payText(){var m=pm();if(m!=="transfer")return "efectivo, en persona en Neuquén Capital";return dm()==="correo"?"transferencia, cuando me confirmen el envío":"transferencia (te envío el comprobante)"}
@@ -387,7 +387,7 @@ function render(){
  });
  list.innerHTML=html||'<p class="empty">Todavía no agregaste nada. Elegí productos del catálogo y tocá Agregar.</p>';
  document.getElementById("cartCount").textContent=count;
- var correo=dm()==="correo";pbox.style.display=(pm()==="transfer"&&count&&!correo)?"block":"none";document.getElementById("tbox").style.display=(pm()==="transfer"&&count&&correo)?"block":"none";document.getElementById("gbox").style.display=(cart["Servicio de grabado personalizado"]|0)?"block":"none";document.getElementById("cbox").style.display=(pm()==="efectivo"&&count)?"block":"none";document.getElementById("dbox").style.display=(dm()==="correo"&&count)?"block":"none";var ef=document.querySelector('input[name=pm][value=efectivo]');if(dm()==="correo"){if(ef.checked){document.querySelector('input[name=pm][value=transfer]').checked=true;return render()}ef.disabled=true;ef.parentNode.classList.add("off")}else{ef.disabled=false;ef.parentNode.classList.remove("off")}document.getElementById("pTotal").textContent=fmt(total);
+ var correo=dm()==="correo";pbox.style.display=(pm()==="transfer"&&count&&dm()==="retiro")?"block":"none";document.getElementById("tbox").style.display=(pm()==="transfer"&&count&&correo)?"block":"none";document.getElementById("gbox").style.display=(cart["Servicio de grabado personalizado"]|0)?"block":"none";document.getElementById("cbox").style.display=(pm()==="efectivo"&&count)?"block":"none";document.getElementById("dbox").style.display=(dm()==="correo"&&count)?"block":"none";var ef=document.querySelector('input[name=pm][value=efectivo]');if(dm()==="correo"){if(ef.checked){document.querySelector('input[name=pm][value=transfer]').checked=true;return render()}ef.disabled=true;ef.parentNode.classList.add("off")}else{ef.disabled=false;ef.parentNode.classList.remove("off")}document.getElementById("pTotal").textContent=fmt(total);
  document.getElementById("cartTotal").textContent=fmt(total);document.getElementById("totLab").textContent=correo?"Subtotal, sin envío":"Total";document.getElementById("totNote").hidden=!correo;
  document.getElementById("cartClear").style.display=count?"block":"none";document.getElementById("cartForm").hidden=!count;document.getElementById("cartFoot").hidden=!count;
  orden={lines:lines,total:total,count:count};buildSend();
