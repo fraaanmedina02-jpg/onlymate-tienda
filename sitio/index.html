@@ -308,6 +308,7 @@ header a[aria-label]{display:inline-flex;align-items:center;min-height:44px}
 .pay label{min-height:44px;padding:.2rem 0}.fld input{min-height:44px}
 .ctl .rm{min-height:44px;padding:0 .2rem}.ctl .rm::before{display:none}.clr{min-height:44px}
 .pt{display:block;width:100%;text-align:left;padding-block:.75rem;margin-block:-.75rem}
+.ct::before{content:attr(data-t) " "}
 .vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
 .skip{position:fixed;left:.75rem;top:-4rem;z-index:70;display:inline-flex;align-items:center;min-height:44px;padding:0 1rem;background:var(--btn);color:var(--btnfg);border-radius:6px;font-weight:700;text-decoration:none}.skip:focus{top:.75rem}
 .social a:focus-visible,footer a:focus-visible{outline-color:#E4DFD7}
@@ -334,7 +335,7 @@ body.hasbar{padding-bottom:5.5rem}
 </div></header>
 <main>
 <section class="hero"><span class="sitter" role="img" aria-label="Mascota de OnlyMate sentada saludando"></span><div class="wrap"><div>
-<h1><span class="vh">Not Only a Mate</span><span aria-hidden="true">Not <span class="gl g-only"></span></span><br><span aria-hidden="true" style="white-space:nowrap">a <span class="gl g-mate"></span><span class="mascot"></span></span></h1>
+<h1><span class="vh">Not Only a Mate</span><span aria-hidden="true"><span class="ct" data-t="Not"></span><span class="gl g-only"></span></span><br><span aria-hidden="true" style="white-space:nowrap"><span class="ct" data-t="a"></span><span class="gl g-mate"></span><span class="mascot"></span></span></h1>
 <p class="lead">Un buen mate a precio justo. ¿Dudas? Nos escribís por WhatsApp y te contestamos nosotros.</p>
 <div class="cta"><a class="btn" href="#productos">Ver productos</a><a class="btn ghost" href="#como-comprar">Cómo comprar</a></div>
 </div></div></section>
