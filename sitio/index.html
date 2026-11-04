@@ -469,7 +469,8 @@ document.querySelectorAll("[data-sd]").forEach(function(b){b.onclick=function(){
 var pmEl=document.getElementById("pm"),pmOv=document.getElementById("pmOv"),pmLast=null,pmI=-1;
 var bigWant="";
 function showBig(b){var im=document.getElementById("pmImg"),big=new Image();bigWant=b;im.src=foto(b,520);big.onload=function(){if(bigWant===b)im.src=big.src};big.src=foto(b,800)}
-function openP(i){history.pushState({ui:"pm",i:i},"");showP(i)}
+function slugP(n){return n.normalize("NFD").replace(/[^a-zA-Z0-9 ]/g,"").trim().toLowerCase().split(" ").join("-")}
+function openP(i){history.pushState({ui:"pm",i:i},"","?p="+slugP(PRODUCTOS[i].n));showP(i)}
 function showP(i){var x=PRODUCTOS[i];pmI=i;pmLast=document.activeElement;var all=[x.img].concat(x.more||[]);
  document.getElementById("pmCat").textContent=x.c;document.getElementById("pmTitle").textContent=x.n;document.getElementById("pmPrice").textContent=x.p;document.getElementById("pmDesc").textContent=x.d;
  var im=document.getElementById("pmImg");im.alt=x.n;showBig(all[0]);
@@ -483,7 +484,7 @@ function hideP(){if(!pmEl.classList.contains("open"))return;pmEl.classList.remov
 document.getElementById("pmClose").onclick=closeP;pmOv.onclick=closeP;
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&pmEl.classList.contains("open"))closeP()});
 document.getElementById("pmBuy").addEventListener("click",function(e){var b=e.target.closest("[data-s]");if(!b)return;var x=PRODUCTOS[pmI];setQ(x.n,(cart[x.n]|0)+(+b.dataset.s));var f=this.querySelector('[data-s="'+b.dataset.s+'"]')||this.querySelector("[data-s]");if(f)f.focus()});
-document.getElementById("pmNow").onclick=function(){var x=PRODUCTOS[pmI];if(!(cart[x.n]|0))setQ(x.n,1);hideP();history.replaceState({ui:"cart"},"");showCart()};
+document.getElementById("pmNow").onclick=function(){var x=PRODUCTOS[pmI];if(!(cart[x.n]|0))setQ(x.n,1);hideP();history.replaceState({ui:"cart"},"",location.pathname);showCart()};
 function cardOpen(e){if(e.target.closest("button:not(.pt),a"))return;var c=e.target.closest(".ph,h3");if(!c)return;var card=c.closest(".prod");var b=card&&card.querySelector(".buy");if(b)openP(+b.dataset.i)}
 secs.addEventListener("click",cardOpen);feat.addEventListener("click",cardOpen);
 
@@ -493,5 +494,6 @@ document.addEventListener("keydown",function(e){if(e.key!=="Tab")return;var c=do
 function uiSync(){var u=uiNow();if(u==="cart"){hideP();showCart()}else if(u==="pm"){hideCart();showP(history.state.i)}else{hideP();hideCart()}}
 window.addEventListener("popstate",uiSync);
 render();paintBuy();uiSync();
+if(!uiNow()&&location.search){var pQ=new URLSearchParams(location.search).get("p"),pI=-1;PRODUCTOS.forEach(function(x,j){if(slugP(x.n)===pQ)pI=j});history.replaceState(null,"",location.pathname);if(pI>=0)openP(pI)}
 </script>
 </body></html>
