@@ -360,6 +360,7 @@ document.querySelectorAll(".wa").forEach(function(e){e.href="https://wa.me/"+WHA
 
 var KEY="onlymate-cart",cart={};
 try{cart=JSON.parse(localStorage.getItem(KEY)||"{}")||{}}catch(e){cart={}}
+if(typeof cart!=="object"||Array.isArray(cart))cart={};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(cart))}catch(e){}}
 function num(p){return parseInt(String(p).replace(/\D/g,""),10)||0}
 function fmt(n){return "$"+String(n).replace(/\B(?=(\d{3})+(?!\d))/g,".")}
@@ -382,8 +383,8 @@ function render(){
  var html="",count=0,total=0,lines=[];
  PRODUCTOS.forEach(function(x,i){
   var q=cart[x.n]|0; if(q<1)return;
-  var sub=num(x.p)*q; count+=q; total+=sub; lines.push("- "+q+" x "+x.n+" ("+fmt(sub)+")");
-  html+='<div class="it">'+'<img class="th" src="'+foto(x.img,520)+'" width="64" height="64" alt="" decoding="async">'+'<div><b>'+x.n+'</b><span class="pr">'+x.p+' c/u</span><div class="ctl"><button type="button" data-a="dec" data-i="'+i+'" aria-label="Quitar una unidad">−</button><span>'+q+'</span><button type="button" data-a="inc" data-i="'+i+'" aria-label="Agregar una unidad">+</button><button type="button" class="rm" data-a="del" data-i="'+i+'">Quitar</button></div></div></div>';
+  var out=x.stock===0,sub=num(x.p)*q; if(!out){count+=q; total+=sub; lines.push("- "+q+" x "+x.n+" ("+fmt(sub)+")")}
+  html+='<div class="it">'+'<img class="th" src="'+foto(x.img,520)+'" width="64" height="64" alt="" decoding="async">'+'<div><b>'+x.n+'</b><span class="pr">'+x.p+' c/u</span><div class="ctl">'+(out?'<span class="pr">Sin stock</span>':'<button type="button" data-a="dec" data-i="'+i+'" aria-label="Quitar una unidad">−</button><span>'+q+'</span><button type="button" data-a="inc" data-i="'+i+'" aria-label="Agregar una unidad">+</button>')+'<button type="button" class="rm" data-a="del" data-i="'+i+'">Quitar</button></div></div></div>';
  });
  list.innerHTML=html||'<p class="empty">Todavía no agregaste nada. Elegí productos del catálogo y tocá Agregar.</p>';
  document.getElementById("cartCount").textContent=count;
@@ -399,15 +400,15 @@ function faltan(){if(!dm())return {msg:"Elegí cómo querés recibir tu pedido."
  return null}
 send.addEventListener("click",function(e){var f=faltan(),er=document.getElementById("cartErr");if(f){e.preventDefault();er.textContent=f.msg;er.hidden=false;f.el.focus();f.el.scrollIntoView({block:"center"});return}er.hidden=true;buildSend()});
 function setQ(n,q){if(q<1)delete cart[n];else cart[n]=q;save();render();paintBuy()}
-function openCart(){drawer.classList.add("open");ov.classList.add("open");drawer.setAttribute("aria-hidden","false");document.getElementById("cartClose").focus()}
-function closeCart(){drawer.classList.remove("open");ov.classList.remove("open");drawer.setAttribute("aria-hidden","true");document.getElementById("cartOpen").focus()}
+function openCart(){drawer.classList.add("open");ov.classList.add("open");document.body.classList.add("lock");drawer.setAttribute("aria-hidden","false");document.getElementById("cartClose").focus()}
+function closeCart(){drawer.classList.remove("open");ov.classList.remove("open");document.body.classList.remove("lock");drawer.setAttribute("aria-hidden","true");document.getElementById("cartOpen").focus()}
 document.getElementById("cartOpen").onclick=openCart;
 document.getElementById("cartClose").onclick=closeCart;
 ov.onclick=closeCart;
 document.addEventListener("keydown",function(e){if(e.key==="Escape"&&drawer.classList.contains("open"))closeCart()});
-document.getElementById("cartClear").onclick=function(){cart={};save();render()};
+document.getElementById("cartClear").onclick=function(){cart={};save();render();paintBuy();document.getElementById("cartClose").focus()};
 function paintBuy(){document.querySelectorAll(".buy").forEach(function(el){var i=+el.dataset.i,x=PRODUCTOS[i],q=cart[x.n]|0;
- if(x.stock===0){if(el.dataset.q!=="x"){el.dataset.q="x";el.innerHTML='<span class="nostock">Sin stock</span>';el.closest(".prod").classList.add("agotado")}return}
+ if(x.stock===0){if(el.dataset.q!=="x"){el.dataset.q="x";el.innerHTML='<span class="nostock">Sin stock</span>';var card=el.closest(".prod");if(card)card.classList.add("agotado")}return}
  if(el.dataset.q===String(q))return;el.dataset.q=q;
  el.innerHTML=q?'<div class="step"><button type="button" data-s="-1" aria-label="Quitar uno de '+x.n+'">−</button><span aria-live="polite">'+q+'</span><button type="button" data-s="1" aria-label="Agregar otro '+x.n+'">+</button></div>':'<button class="btn small" type="button" data-s="1">Agregar</button>';});}
 secs.addEventListener("click",function(e){
