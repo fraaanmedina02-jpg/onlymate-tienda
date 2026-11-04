@@ -1,0 +1,4 @@
+capturas/*.tmp
+*.log
+Thumbs.db
+desktop.ini
