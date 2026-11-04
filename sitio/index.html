@@ -68,7 +68,7 @@ img{max-width:100%;display:block}a{color:inherit}
 .wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem}
 header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
 header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
-header img{width:81px;height:auto}
+header img{width:92px;height:auto}
 nav.top{display:flex;align-items:center;gap:1.6rem}
 @media (max-width:560px){nav.top a[href="#como-comprar"],nav.top a[href="#historia"]{display:none}}
 nav.top a{text-decoration:none;font-weight:500;font-size:.95rem}
@@ -313,6 +313,14 @@ header a[aria-label]{display:inline-flex;align-items:center;min-height:44px}
 .social a:focus-visible,footer a:focus-visible{outline-color:#E4DFD7}
 .pt:active,.faq summary:active,.mas summary:active{opacity:.65}
 @media (prefers-reduced-motion:reduce){.drawer,.drawer.open,.ov,.ov.open,.pm,.pm.open,.pm-ov,.pm-ov.open{transition:none}}
+.badge[hidden]{display:none}
+.flinks{flex-basis:100%;display:flex;flex-wrap:wrap;gap:0 1.5rem}.flinks a{margin:0;display:inline-flex;align-items:center;min-height:44px;font-size:.95rem}
+@media (hover:hover) and (pointer:fine){.flinks a:hover{text-decoration:underline}}
+@media (max-width:699px){.sec{padding-top:3rem}.cat{margin-bottom:2.75rem}.chips{margin-bottom:2rem}.how,.story{padding:3rem 0}}
+.prod .in{gap:.3rem;padding-top:.8rem}.price{font-size:1.1rem;letter-spacing:-.005em}
+.prod .row{margin-top:.6rem}.feat .prod .row{margin-top:.35rem}
+.pm-info h2{margin:.25rem 0 .5rem}.pm-pay{margin:.35rem 0 1.25rem;line-height:1.45}.pm-perks{margin:1.25rem 0}.pm-perks b{font-weight:500}
+.pay{margin-bottom:.7rem}.pay legend{margin-bottom:.15rem}.pbox{margin-bottom:.8rem}.it{padding:.8rem 0}.it .pr{display:block}.ctl{margin-top:.25rem}
 body.hasbar{padding-bottom:5.5rem}
 @media (prefers-reduced-motion:reduce){.cartbar{transition:none}.cartbar:active{transform:none;opacity:.7}@starting-style{.cartbar{opacity:1;transform:none}}}
 </style>
@@ -356,7 +364,7 @@ body.hasbar{padding-bottom:5.5rem}
 <a class="soc" id="lnkTt" href="#" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.5 2.6 2.4 4.3 5 4.5"/></svg><span><b>TikTok</b>@onlyymate</span></a>
 </div></div></section>
 </main>
-<footer><div class="wrap"><img src="img/logo-claro-340.webp" width="340" height="88" alt="OnlyMate" loading="lazy" decoding="async"><nav class="fsoc"><a href="#" class="wa" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9.2 9.3c.3 2.4 2.3 4.6 5 5.4l1-1.2-1.6-.9-.7.6c-1-.5-1.8-1.3-2.3-2.3l.6-.7-.9-1.6z" fill="currentColor" stroke="none"/></svg></a><a href="#" class="ig" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg></a><a href="#" class="tt" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.5 2.6 2.4 4.3 5 4.5"/></svg></a></nav><small>© 2026 OnlyMate</small></div></footer>
+<footer><div class="wrap"><img src="img/logo-claro-340.webp" width="340" height="88" alt="OnlyMate" loading="lazy" decoding="async"><nav class="fsoc"><a href="#" class="wa" aria-label="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20l1.3-3.9A8 8 0 1 1 8 19z"/><path d="M9.2 9.3c.3 2.4 2.3 4.6 5 5.4l1-1.2-1.6-.9-.7.6c-1-.5-1.8-1.3-2.3-2.3l.6-.7-.9-1.6z" fill="currentColor" stroke="none"/></svg></a><a href="#" class="ig" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor"/></svg></a><a href="#" class="tt" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4v10.5a3.5 3.5 0 1 1-3.5-3.5"/><path d="M14 4c.5 2.6 2.4 4.3 5 4.5"/></svg></a></nav><nav class="flinks" aria-label="Secciones"><a href="#historia">Historia</a><a href="#como-comprar">Cómo comprar</a><a href="#preguntas">Preguntas frecuentes</a></nav><small>© 2026 OnlyMate</small></div></footer>
 <div class="pm-ov" id="pmOv"></div>
 <div class="pm" id="pm" role="dialog" aria-modal="true" aria-labelledby="pmTitle" aria-hidden="true">
 <button class="x pm-x" id="pmClose" type="button" aria-label="Cerrar">✕</button>
@@ -436,7 +444,7 @@ function render(){
   html+='<div class="it">'+'<img class="th" src="'+foto(x.img,520)+'" width="64" height="64" alt="" decoding="async">'+'<div><b>'+x.n+'</b><span class="pr">'+x.p+' c/u</span><div class="ctl">'+(out?'<span class="pr">Sin stock</span>':'<button type="button" data-a="dec" data-i="'+i+'" aria-label="Quitar una unidad de '+x.n+'">−</button><span>'+q+'</span><button type="button" data-a="inc" data-i="'+i+'" aria-label="Agregar una unidad de '+x.n+'">+</button>')+'<button type="button" class="rm" data-a="del" data-i="'+i+'" aria-label="Quitar '+x.n+' del carrito">Quitar</button></div></div></div>';
  });
  list.innerHTML=html||'<p class="empty">Todavía no agregaste nada. Elegí productos del catálogo y tocá Agregar.</p>';
- document.getElementById("cartCount").textContent=count;document.getElementById("cartOpen").setAttribute("aria-label",count?"Abrir carrito, "+count+(count===1?" producto":" productos"):"Abrir carrito");var bar=document.getElementById("cartBar");bar.hidden=!count;document.body.classList.toggle("hasbar",!!count);document.getElementById("barCount").textContent=count;document.getElementById("barTotal").textContent=fmt(total);
+ document.getElementById("cartCount").textContent=count;document.getElementById("cartCount").hidden=!count;document.getElementById("cartOpen").setAttribute("aria-label",count?"Abrir carrito, "+count+(count===1?" producto":" productos"):"Abrir carrito");var bar=document.getElementById("cartBar");bar.hidden=!count;document.body.classList.toggle("hasbar",!!count);document.getElementById("barCount").textContent=count;document.getElementById("barTotal").textContent=fmt(total);
  var correo=dm()==="correo";pbox.style.display=(pm()==="transfer"&&count&&dm()==="retiro")?"block":"none";document.getElementById("tbox").style.display=(pm()==="transfer"&&count&&correo)?"block":"none";document.getElementById("gbox").style.display=(cart["Servicio de grabado personalizado"]|0)?"block":"none";document.getElementById("cbox").style.display=(pm()==="efectivo"&&count)?"block":"none";document.getElementById("dbox").style.display=(dm()==="correo"&&count)?"block":"none";var ef=document.querySelector('input[name=pm][value=efectivo]');if(dm()==="correo"){if(ef.checked){document.querySelector('input[name=pm][value=transfer]').checked=true;return render()}ef.disabled=true;ef.parentNode.classList.add("off")}else{ef.disabled=false;ef.parentNode.classList.remove("off")}document.getElementById("efNote").hidden=!correo;document.getElementById("pTotal").textContent=fmt(total);
  document.getElementById("cartTotal").textContent=fmt(total);document.getElementById("totLab").textContent=correo?"Subtotal, sin envío":"Total";document.getElementById("totNote").hidden=!correo;
  document.getElementById("cartClear").style.display=count?"block":"none";document.getElementById("cartForm").hidden=!count;document.getElementById("cartFoot").hidden=!count;
