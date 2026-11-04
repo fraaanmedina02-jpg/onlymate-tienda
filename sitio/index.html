@@ -209,7 +209,7 @@ footer small{flex-basis:100%;opacity:.6;border-top:1px solid #453F48;padding-top
 .tot{display:flex;justify-content:space-between;font-size:1.2rem;margin-bottom:.7rem}.cfoot .btn{display:block;width:100%;text-align:center}
 .clr{display:block;margin:.8rem auto 0;background:none;border:0;color:var(--mut);text-decoration:underline;font:400 .9rem Outfit,sans-serif;cursor:pointer}
 .pay{border:0;padding:0;margin:0 0 .8rem}.pay legend{font-weight:700;padding:0;margin-bottom:.3rem}.pay label{display:flex;gap:.55rem;align-items:center;padding:.3rem 0;cursor:pointer}.pay input{accent-color:var(--fg);width:1.05rem;height:1.05rem}
-.totnote{margin:-.35rem 0 .7rem;color:var(--mut);font-size:.875rem;line-height:1.4}.pbox{border:1px solid var(--line);background:var(--tile);border-radius:8px;padding:.8rem .9rem;margin-bottom:.9rem;font-size:.95rem}.pbox p{margin:0 0 .4rem}.pbox .note{margin:.5rem 0 0;color:var(--mut)}
+.cerr{margin:0 0 .7rem;padding:.55rem .75rem;border:1px solid var(--fg);border-radius:6px;font-size:.9rem;font-weight:500;line-height:1.35}.fld input[aria-invalid="true"]{border-color:var(--fg);border-width:2px}.totnote{margin:-.35rem 0 .7rem;color:var(--mut);font-size:.875rem;line-height:1.4}.pbox{border:1px solid var(--line);background:var(--tile);border-radius:8px;padding:.8rem .9rem;margin-bottom:.9rem;font-size:.95rem}.pbox p{margin:0 0 .4rem}.pbox .note{margin:.5rem 0 0;color:var(--mut)}
 .pbox dl{margin:.4rem 0;display:grid;grid-template-columns:auto 1fr;gap:.35rem .8rem;align-items:center}.pbox dt{font-weight:700}.pbox dd{margin:0;word-break:break-all}
 .cp{margin-left:.5rem;border:1px solid var(--fg);background:none;color:var(--fg);border-radius:999px;padding:.1rem .7rem;font:500 .8rem Outfit,sans-serif;cursor:pointer}
 
@@ -329,14 +329,14 @@ button,a,.btn{-webkit-tap-highlight-color:transparent}
 <div class="df" id="cartForm"><fieldset class="pay"><legend>Entrega</legend>
 <label><input type="radio" name="dm" value="retiro" checked> Punto de encuentro en Neuquén Capital</label>
 <label><input type="radio" name="dm" value="correo"> Envío por Correo Argentino o Andreani</label></fieldset>
-<div class="pbox" id="dbox"><label class="fld">Nombre y apellido<input id="fNom" autocomplete="name"></label><label class="fld">Dirección<input id="fDir" autocomplete="street-address"></label><label class="fld">Localidad y provincia<input id="fLoc" autocomplete="address-level2"></label><label class="fld">Código postal<input id="fCp" inputmode="numeric" autocomplete="postal-code"></label></div>
+<div class="pbox" id="dbox"><label class="fld">Nombre y apellido<input id="fNom" autocomplete="name" required></label><label class="fld">Dirección<input id="fDir" autocomplete="street-address" required></label><label class="fld">Localidad y provincia<input id="fLoc" autocomplete="address-level2" required></label><label class="fld">Código postal<input id="fCp" inputmode="numeric" autocomplete="postal-code" required></label></div>
 <fieldset class="pay"><legend>Forma de pago</legend>
 <label><input type="radio" name="pm" value="transfer" checked> Transferencia o Mercado Pago (alias)</label>
 <label><input type="radio" name="pm" value="efectivo"> Efectivo al recibir o retirar</label></fieldset>
 <div class="pbox" id="pbox"></div><div class="pbox" id="tbox"><p>Transferís cuando te confirmemos el envío: te pasamos el total y los datos por WhatsApp.</p></div><div class="pbox" id="gbox"><p><b>Pediste grabado personalizado.</b> El grabado suma unos días a la preparación de tu pedido. Contanos por WhatsApp qué querés grabar y te confirmamos el plazo.</p></div><div class="pbox" id="cbox"><p>Para pagar en efectivo, coordinamos por WhatsApp el lugar y el horario de entrega.</p><p class="note">Enviá tu pedido y te respondemos para arreglar.</p></div>
 <button class="clr" id="cartClear" type="button">Vaciar carrito</button></div></div>
 <div class="cfoot" id="cartFoot"><div class="tot"><span id="totLab">Total</span><strong id="cartTotal">$0</strong></div><p class="totnote" id="totNote" hidden>El envío se cobra aparte. Te pasamos el costo por WhatsApp antes de que pagues.</p>
-<a class="btn" id="cartSend" href="#" target="_blank" rel="noopener" aria-disabled="true">Enviar pedido por WhatsApp</a></div>
+<p class="cerr" id="cartErr" role="alert" hidden></p><a class="btn" id="cartSend" href="#" target="_blank" rel="noopener" aria-disabled="true">Enviar pedido por WhatsApp</a></div>
 </aside>
 <script>
 function foto(b,w){return "img/"+b+"-"+w+".webp"}
@@ -376,8 +376,8 @@ pbox.addEventListener("click",function(e){var b=e.target.closest(".cp");if(!b)re
  function ok(){b.textContent="Copiado";setTimeout(function(){b.textContent="Copiar"},1200)}
  try{navigator.clipboard.writeText(t).then(ok,fb)}catch(x){fb()}
  function fb(){var a=document.createElement("textarea");a.value=t;document.body.appendChild(a);a.select();try{document.execCommand("copy");ok()}catch(x){}a.remove()}});
-document.querySelectorAll("#dbox input").forEach(function(x){x.addEventListener("input",function(){render()})});
-document.querySelectorAll("input[name=pm],input[name=dm]").forEach(function(r){r.addEventListener("change",function(){render()})});
+document.querySelectorAll("#dbox input").forEach(function(x){x.addEventListener("input",function(){x.removeAttribute("aria-invalid");document.getElementById("cartErr").hidden=true;buildSend()})});
+document.querySelectorAll("input[name=pm],input[name=dm]").forEach(function(r){r.addEventListener("change",function(){document.getElementById("cartErr").hidden=true;render()})});
 function render(){
  var html="",count=0,total=0,lines=[];
  PRODUCTOS.forEach(function(x,i){
@@ -390,9 +390,14 @@ function render(){
  var correo=dm()==="correo";pbox.style.display=(pm()==="transfer"&&count&&!correo)?"block":"none";document.getElementById("tbox").style.display=(pm()==="transfer"&&count&&correo)?"block":"none";document.getElementById("gbox").style.display=(cart["Servicio de grabado personalizado"]|0)?"block":"none";document.getElementById("cbox").style.display=(pm()==="efectivo"&&count)?"block":"none";document.getElementById("dbox").style.display=(dm()==="correo"&&count)?"block":"none";var ef=document.querySelector('input[name=pm][value=efectivo]');if(dm()==="correo"){if(ef.checked){document.querySelector('input[name=pm][value=transfer]').checked=true;return render()}ef.disabled=true;ef.parentNode.classList.add("off")}else{ef.disabled=false;ef.parentNode.classList.remove("off")}document.getElementById("pTotal").textContent=fmt(total);
  document.getElementById("cartTotal").textContent=fmt(total);document.getElementById("totLab").textContent=correo?"Subtotal, sin envío":"Total";document.getElementById("totNote").hidden=!correo;
  document.getElementById("cartClear").style.display=count?"block":"none";document.getElementById("cartForm").hidden=!count;document.getElementById("cartFoot").hidden=!count;
- if(count){send.setAttribute("aria-disabled","false");send.href="https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent("Hola OnlyMate, quiero hacer este pedido:\n"+lines.join("\n")+"\n"+totText(total)+"\nForma de pago: "+payText()+"\n"+delText())}
- else{send.setAttribute("aria-disabled","true");send.href="#"}
+ orden={lines:lines,total:total,count:count};buildSend();
 }
+var orden={lines:[],total:0,count:0};
+function buildSend(){if(orden.count){send.setAttribute("aria-disabled","false");send.href="https://wa.me/"+WHATSAPP+"?text="+encodeURIComponent("Hola OnlyMate, quiero hacer este pedido:\n"+orden.lines.join("\n")+"\n"+totText(orden.total)+"\nForma de pago: "+payText()+"\n"+delText())}else{send.setAttribute("aria-disabled","true");send.removeAttribute("href")}}
+function faltan(){if(!dm())return {msg:"Elegí cómo querés recibir tu pedido.",el:document.querySelector("input[name=dm]")};
+ if(dm()==="correo"){var bad=null;["fNom","fDir","fLoc","fCp"].forEach(function(id){var e=document.getElementById(id),m=!v(id);if(m){e.setAttribute("aria-invalid","true");if(!bad)bad=e}else e.removeAttribute("aria-invalid")});if(bad)return {msg:"Completá tus datos para el envío: nombre, dirección, localidad y código postal.",el:bad}}
+ return null}
+send.addEventListener("click",function(e){var f=faltan(),er=document.getElementById("cartErr");if(f){e.preventDefault();er.textContent=f.msg;er.hidden=false;f.el.focus();f.el.scrollIntoView({block:"center"});return}er.hidden=true;buildSend()});
 function setQ(n,q){if(q<1)delete cart[n];else cart[n]=q;save();render();paintBuy()}
 function openCart(){drawer.classList.add("open");ov.classList.add("open");drawer.setAttribute("aria-hidden","false");document.getElementById("cartClose").focus()}
 function closeCart(){drawer.classList.remove("open");ov.classList.remove("open");drawer.setAttribute("aria-hidden","true");document.getElementById("cartOpen").focus()}
