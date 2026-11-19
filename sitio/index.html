@@ -306,6 +306,23 @@ section[id]{scroll-margin-top:110px}
 .res-form textarea{resize:vertical;min-height:100px}
 .res-form [aria-invalid="true"]{border-color:var(--sale)}
 .res-form .agregar{margin-top:6px}
+.res-fotos[hidden]{display:none}
+.res-fotos{display:flex;flex-direction:column;gap:8px;margin-bottom:6px}
+.rf-tit{font-size:14px;font-weight:600;color:var(--muted)}
+.rf-tit small{font-weight:500}
+.rf-fila{display:flex;flex-wrap:wrap;gap:10px}
+.rf-sumar,.rf-mini{width:84px;height:84px;border-radius:12px;flex:none}
+.rf-sumar{border:2px dashed var(--line);background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:12.5px;font-weight:600;color:var(--muted)!important;cursor:pointer;text-align:center;line-height:1.15}
+.rf-sumar span{font-size:24px;line-height:1;color:var(--accent-text)}
+.rf-sumar:hover{border-style:solid}
+.res-fotos:focus-within .rf-sumar{outline:3px solid var(--accent-text);outline-offset:2px}
+.rf-sumar[hidden]{display:none}
+.rf-mini{position:relative;border:2px solid var(--line);overflow:hidden;background:var(--bg)}
+.rf-mini img{width:100%;height:100%;object-fit:cover;display:block}
+.rf-mini button{position:absolute;top:4px;right:4px;width:28px;height:28px;border-radius:99px;border:2px solid var(--carbon);background:var(--beige);color:var(--carbon);font-size:15px;line-height:1;font-weight:700;cursor:pointer;display:grid;place-items:center;padding:0}
+.ri-fotos{display:flex;flex-wrap:wrap;gap:8px;margin-top:2px}
+.ri-fotos a{display:block;width:88px;height:88px;border-radius:12px;overflow:hidden;border:2px solid var(--line);flex:none}
+.ri-fotos img{width:100%;height:100%;object-fit:cover;display:block}
 .res-enviar{display:flex;align-items:center;justify-content:center;text-decoration:none}
 .res-enviar[aria-disabled="true"]{opacity:.7;pointer-events:none}
 .res-gracias{text-align:center;padding:18px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;outline:none}
@@ -620,8 +637,20 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
             <select id="rProd"><option value="">Prefiero no decirlo</option></select>
             <label for="rTxt">Tu reseña *</label>
             <textarea id="rTxt" rows="4" maxlength="600" placeholder="Contanos qué te pareció el mate, el envío, la atención…"></textarea>
+            <div class="res-fotos" id="resFotos" hidden>
+              <span class="rf-tit" id="rfTit">Fotos de tu mate <small>(opcional, hasta 3)</small></span>
+              <div class="rf-fila" id="rfFila">
+                <label class="rf-sumar" id="rfSumar" for="rFotos"><span aria-hidden="true">＋</span>Sumar foto</label>
+              </div>
+              <input id="rFotos" class="vh" type="file" accept="image/*" multiple aria-describedby="rfTit">
+            </div>
             <a class="agregar grande res-enviar" id="resEnviar" href="https://docs.google.com/forms/d/e/1FAIpQLScVf26Vyc258o7MYRH7ZyMD0Ptn5mzHgyR2QFCKvaShgOzXiw/viewform" target="_blank" rel="noopener">Enviar reseña</a>
             <p class="nota">Te llega al instante, sin iniciar sesión ni abrir nada. La sumamos acá después de leerla.</p>
+          </form>
+          <!-- formulario para Netlify (reseñas con fotos): Netlify lo detecta al publicar; nunca se muestra -->
+          <form name="resena-fotos" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" hidden aria-hidden="true">
+            <input name="bot-field"><input name="estrellas"><input name="nombre"><input name="producto"><textarea name="opinion"></textarea>
+            <input type="file" name="foto1"><input type="file" name="foto2"><input type="file" name="foto3">
           </form>
         </div>
         <div>
@@ -999,14 +1028,18 @@ document.addEventListener("keydown",e=>{if($("ficha").hidden)return;
   if(e.key==="Tab"){const L=[...$("ficha").querySelectorAll("button:not([disabled]),a[href]")].filter(x=>x.offsetParent!==null);if(!L.length)return;const a=L[0],z=L[L.length-1];
     if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}});
 /* ---------- reseñas: las publicadas vienen del dashboard; las nuevas se mandan por WhatsApp ---------- */
-const RESENAS=(DATOS.resenas||[]).filter(r=>r&&r.t).map(r=>({n:String(r.n||"").trim()||"Cliente de OnlyMate",e:Math.max(1,Math.min(5,Math.round(+r.e||5))),t:String(r.t),f:String(r.f||""),pid:String(r.pid||"")}));
+const RESENAS=(DATOS.resenas||[]).filter(r=>r&&r.t).map(r=>({n:String(r.n||"").trim()||"Cliente de OnlyMate",e:Math.max(1,Math.min(5,Math.round(+r.e||5))),t:String(r.t),f:String(r.f||""),pid:String(r.pid||""),ft:(Array.isArray(r.ft)?r.ft:[]).map(String).filter(x=>/^img\/resenas\/[\w.-]+$/.test(x)).slice(0,3)}));
+/* fotos de reseñas: en la página propia van con ruta relativa; en Claude se piden a la página propia (si no cargan, no se muestran) */
+const fotoRes=p=>(PROPIO?"":"https://onlyymate.netlify.app/")+p;
+const fotosRes=r=>r.ft.length?'<div class="ri-fotos">'+r.ft.map((p,i)=>'<a href="'+esc(fotoRes(p))+'" target="_blank" rel="noopener" aria-label="Foto '+(i+1)+' de la reseña de '+esc(r.n)+'"><img src="'+esc(fotoRes(p))+'" alt="" loading="lazy" decoding="async"></a>').join("")+"</div>":"";
+document.addEventListener("error",e=>{const a=e.target&&e.target.closest&&e.target.closest(".ri-fotos a");if(a){const d=a.parentNode;a.remove();if(!d.children.length)d.remove()}},true);
 const nombreProd=id=>{const v=VISTA[id]||{};const x=RAW[id];return v.n||(x?x.n:"")};
 const estrellas=(k,lbl)=>'<span class="stars" role="img" aria-label="'+(lbl||k+" de 5 estrellas")+'">'+"★".repeat(k)+'<span class="off" aria-hidden="true">'+"★".repeat(5-k)+"</span></span>";
 const promedio=L=>L.length?L.reduce((s,r)=>s+r.e,0)/L.length:0;
 const coma=v=>v.toFixed(1).replace(".",",");
 function fechaRes(f){const m=f.match(/^(\d{4})-(\d\d)-(\d\d)/);if(!m)return"";const d=new Date(+m[1],+m[2]-1,+m[3]);return d.toLocaleDateString("es-AR",{day:"numeric",month:"long",year:"numeric"})}
 function itemRes(r,conProd){const prod=conProd&&r.pid?nombreProd(r.pid):"";
-  return'<article class="res-item"><div class="ri-cab">'+estrellas(r.e)+"<b>"+esc(r.n)+'</b><span class="ri-f">'+esc(fechaRes(r.f))+"</span></div><p>"+esc(r.t)+"</p>"+
+  return'<article class="res-item"><div class="ri-cab">'+estrellas(r.e)+"<b>"+esc(r.n)+'</b><span class="ri-f">'+esc(fechaRes(r.f))+"</span></div><p>"+esc(r.t)+"</p>"+fotosRes(r)+
     (prod?(ALL[r.pid]?'<button type="button" class="ri-prod" data-ficha="'+esc(r.pid)+'">Compró: '+esc(prod)+"</button>":'<span class="ri-prod" style="text-decoration:none;cursor:default">Compró: '+esc(prod)+"</span>"):"")+"</article>"}
 let resTodas=false;const RES_INI=5;
 function pintarResenas(){const L=RESENAS,n=L.length;
@@ -1040,10 +1073,34 @@ $("resEnviar").addEventListener("click",e=>{const k=estSel(),nom=$("rNom").value
 const PROPIO=/^https?:$/.test(location.protocol)&&!/(claudeusercontent\.com|claude\.ai|claude\.site|localhost|127\.0\.0\.1)$/.test(location.hostname);
 /* en Claude no se puede mandar la reseña sin abrir otra pestaña: el formulario solo aparece en la página propia */
 if(!PROPIO)$("resForm").hidden=true;
+/* fotos de la reseña (solo página propia): se achican en el celu a 1600 px y se mandan a Netlify Forms junto con la reseña */
+const FOTOS=[],FOTOS_MAX=3;
+if(PROPIO)$("resFotos").hidden=false;
+function achicarFoto(file){return new Promise((ok,mal)=>{const u=URL.createObjectURL(file),im=new Image();
+  im.onload=()=>{const L=1600,s=Math.min(1,L/Math.max(im.naturalWidth,im.naturalHeight)),c=document.createElement("canvas");c.width=Math.round(im.naturalWidth*s);c.height=Math.round(im.naturalHeight*s);
+    const g=c.getContext("2d");g.fillStyle="#fff";g.fillRect(0,0,c.width,c.height);g.drawImage(im,0,0,c.width,c.height);URL.revokeObjectURL(u);
+    c.toBlob(b=>b?ok({blob:b,url:URL.createObjectURL(b)}):mal(new Error("toBlob")),"image/jpeg",.85)};
+  im.onerror=()=>{URL.revokeObjectURL(u);mal(new Error("img"))};im.src=u})}
+function pintarFotos(){const f=$("rfFila");f.querySelectorAll(".rf-mini").forEach(x=>x.remove());
+  FOTOS.forEach((x,i)=>{const d=document.createElement("div");d.className="rf-mini";d.innerHTML='<img alt="Foto '+(i+1)+'" src="'+x.url+'"><button type="button" data-quitar="'+i+'" aria-label="Quitar foto '+(i+1)+'">✕</button>';f.insertBefore(d,$("rfSumar"))});
+  $("rfSumar").hidden=FOTOS.length>=FOTOS_MAX}
+$("rFotos").addEventListener("change",async e=>{const L=[...e.target.files].filter(f=>/^image\//.test(f.type)||/\.(heic|heif|jpe?g|png|webp)$/i.test(f.name));e.target.value="";
+  let sobran=false,fallo=false;
+  for(const f of L){if(FOTOS.length>=FOTOS_MAX){sobran=true;break}try{FOTOS.push(await achicarFoto(f))}catch(err){fallo=true}}
+  pintarFotos();if(sobran)toast("Podés sumar hasta 3 fotos");else if(fallo)toast("Una foto no se pudo abrir: probá con otra")});
+$("rfFila").addEventListener("click",e=>{const b=e.target.closest("[data-quitar]");if(!b)return;const x=FOTOS.splice(+b.dataset.quitar,1)[0];if(x)URL.revokeObjectURL(x.url);pintarFotos();$("rFotos").focus()});
 let enviando=false;
 async function enviarResena(k,nom,txt,pid){if(enviando)return;enviando=true;const b=$("resEnviar");b.setAttribute("aria-disabled","true");b.textContent="Enviando…";
-  const datos=new URLSearchParams({"entry.1472009643":"⭐".repeat(k),"entry.1497647507":nom,"entry.77100207":pid?nombreProd(pid)+" ("+pid+")":"","entry.1730016467":txt});
-  try{await fetch(FORM.replace(/viewform$/,"formResponse"),{method:"POST",mode:"no-cors",body:datos});
+  const prodTxt=pid?nombreProd(pid)+" ("+pid+")":"";
+  const datos=new URLSearchParams({"entry.1472009643":"⭐".repeat(k),"entry.1497647507":nom,"entry.77100207":prodTxt,"entry.1730016467":txt});
+  try{let conFotos=false;
+    if(FOTOS.length){/* con fotos: va todo junto a Netlify (el Google Form no acepta fotos sin iniciar sesión) */
+      const fd=new FormData();fd.append("form-name","resena-fotos");fd.append("bot-field","");fd.append("estrellas",String(k));fd.append("nombre",nom);fd.append("producto",prodTxt);fd.append("opinion",txt);
+      FOTOS.forEach((x,i)=>fd.append("foto"+(i+1),x.blob,"foto"+(i+1)+".jpg"));
+      try{const r=await fetch("/",{method:"POST",body:fd});conFotos=r.ok}catch(err){conFotos=false}}
+    /* sin fotos, o si Netlify falló: la reseña (solo texto) va al Google Form como siempre */
+    if(!conFotos)await fetch(FORM.replace(/viewform$/,"formResponse"),{method:"POST",mode:"no-cors",body:datos});
+    if(FOTOS.length&&!conFotos)toast("La reseña llegó, pero las fotos no se pudieron subir");
     $("resForm").innerHTML='<div class="res-gracias" role="status" tabindex="-1"><span class="rg-ico" aria-hidden="true">★</span><h3>¡Gracias, '+esc(nom)+'!</h3><p>Tu reseña ya nos llegó. La leemos y la sumamos a la página en estos días.</p></div>';
     $("resForm").querySelector(".res-gracias").focus()}
   catch(err){toast("No se pudo enviar. Revisá tu conexión y probá de nuevo");b.textContent="Enviar reseña";b.removeAttribute("aria-disabled")}
