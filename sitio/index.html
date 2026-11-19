@@ -298,6 +298,7 @@ section[id]{scroll-margin-top:110px}
 .stars .off{color:var(--surface-2)}
 .rr-cab .stars{font-size:24px}
 .res-form{background:var(--surface);border:var(--bw) solid var(--line);border-radius:var(--r);box-shadow:6px 6px 0 var(--shadow);padding:20px 22px;display:flex;flex-direction:column;gap:8px}
+.res-form[hidden]{display:none}
 .res-form h3{font-family:var(--f-display);font-weight:400;font-size:24px;margin:0 0 4px;color:var(--accent-text)}
 .res-form label,.estrellas-in legend{font-size:14px;font-weight:600;color:var(--muted)}
 .res-form input[type=text],.res-form select,.res-form textarea{width:100%;border:2px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg);min-height:44px;font:inherit;color:inherit;margin-bottom:6px}
@@ -1032,6 +1033,8 @@ $("resEnviar").addEventListener("click",e=>{const k=estSel(),nom=$("rNom").value
   resLink();toast("¡Gracias! Tocá «Enviar» en el formulario y listo")});
 /* en la página propia (onlymate.com.ar / Netlify) la reseña se manda ahí mismo, sin abrir nada ni iniciar sesión */
 const PROPIO=/^https?:$/.test(location.protocol)&&!/(claudeusercontent\.com|claude\.ai|claude\.site|localhost|127\.0\.0\.1)$/.test(location.hostname);
+/* en Claude no se puede mandar la reseña sin abrir otra pestaña: el formulario solo aparece en la página propia */
+if(!PROPIO)$("resForm").hidden=true;
 let enviando=false;
 async function enviarResena(k,nom,txt,pid){if(enviando)return;enviando=true;const b=$("resEnviar");b.setAttribute("aria-disabled","true");b.textContent="Enviando…";
   const datos=new URLSearchParams({"entry.1472009643":"⭐".repeat(k),"entry.1497647507":nom,"entry.77100207":pid?nombreProd(pid)+" ("+pid+")":"","entry.1730016467":txt});
