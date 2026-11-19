@@ -1005,7 +1005,7 @@ function itemRes(r,conProd){const prod=conProd&&r.pid?nombreProd(r.pid):"";
     (prod?(ALL[r.pid]?'<button type="button" class="ri-prod" data-ficha="'+esc(r.pid)+'">Compró: '+esc(prod)+"</button>":'<span class="ri-prod" style="text-decoration:none;cursor:default">Compró: '+esc(prod)+"</span>"):"")+"</article>"}
 let resTodas=false;const RES_INI=5;
 function pintarResenas(){const L=RESENAS,n=L.length;
-  if(!n){$("resResumen").innerHTML='<p class="rr-vacio"><b>Todavía no hay reseñas</b>¡Sé el primero en contarnos qué te pareció tu OnlyMate!</p>'}
+  if(!n){$("resResumen").innerHTML='<p class="rr-vacio"><b>Todavía no hay reseñas</b>'+(PROPIO?"¡Sé el primero en contarnos qué te pareció tu OnlyMate!":"Muy pronto vas a ver acá lo que opinan nuestros clientes.")+"</p>"}
   else{const pr=promedio(L);$("resResumen").innerHTML='<span class="rr-num">'+coma(pr)+'</span><div class="rr-cab">'+estrellas(Math.round(pr),"Promedio "+coma(pr)+" de 5")+"<span>"+n+" reseña"+(n===1?"":"s")+'</span></div><div class="rr-barras">'+
     [5,4,3,2,1].map(k=>{const c=L.filter(r=>r.e===k).length;return'<div class="rr-b"><span>'+k+'★</span><i aria-hidden="true"><b style="width:'+Math.round(c/n*100)+'%"></b></i><span>'+c+"</span></div>"}).join("")+"</div>"}
   $("resLista").innerHTML=n?(resTodas?L:L.slice(0,RES_INI)).map(r=>itemRes(r,true)).join(""):'<div class="res-vacia"><b>Acá van a aparecer las reseñas</b>Cuando nos dejes la tuya, la sumamos a esta lista.</div>';
