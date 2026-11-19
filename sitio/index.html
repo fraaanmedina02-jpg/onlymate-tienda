@@ -360,7 +360,7 @@ footer a:hover{text-decoration:underline}
 footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padding-top:16px;font-size:14px;opacity:.75}
 
 /* whatsapp flotante */
-.wa{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:25;width:60px;height:60px;border-radius:50%;background:var(--verde);border:var(--bw) solid var(--carbon);box-shadow:4px 4px 0 var(--carbon);display:grid;place-items:center}
+.wa{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:25;width:60px;height:60px;border-radius:50%;background:var(--verde);border:var(--bw) solid var(--carbon);box-shadow:4px 4px 0 var(--carbon);display:grid;place-items:center}
 .wa svg{width:30px;height:30px}
 
 /* carrito */
@@ -382,7 +382,7 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
 .panel-f label{font-size:13px;font-weight:600;color:var(--muted)}
 .vacio{text-align:center;color:var(--muted);padding:40px 10px}
 .nota{font-size:13px;color:var(--muted);margin:0}
-.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--verde);color:var(--beige);border:var(--bw) solid var(--carbon);border-radius:14px;padding:10px 18px;box-shadow:4px 4px 0 var(--carbon);font-weight:700;z-index:50}
+.toast{position:fixed;left:50%;bottom:calc(160px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--verde);color:var(--beige);border:var(--bw) solid var(--carbon);border-radius:14px;padding:10px 18px;box-shadow:4px 4px 0 var(--carbon);font-weight:700;z-index:50}
 
 /* isotipo */
 .iso{display:inline-block;width:1em;height:1em;margin-left:.12em;vertical-align:-.12em;-webkit-text-stroke:0}
@@ -456,7 +456,7 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
 .resumen .total{font-size:18px}
 
 /* barra de pedido */
-.barra{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:24;display:flex;align-items:center;gap:10px;background:var(--verde);color:var(--beige);border:var(--bw) solid var(--carbon);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--carbon);font-weight:700;cursor:pointer;min-height:56px;max-width:calc(100% - 112px)}
+.barra{position:fixed;left:calc(16px + env(safe-area-inset-left,0px));bottom:calc(88px + env(safe-area-inset-bottom,0px));z-index:24;display:flex;align-items:center;gap:10px;background:var(--verde);color:var(--beige);border:var(--bw) solid var(--carbon);border-radius:16px;padding:10px 16px;box-shadow:4px 4px 0 var(--carbon);font-weight:700;cursor:pointer;min-height:56px;max-width:calc(100% - 112px)}
 .barra .cuenta{background:var(--beige);color:var(--carbon)}
 .toast{display:flex;align-items:center;gap:12px}
 .toast button{border:2px solid var(--carbon);background:var(--beige);color:var(--carbon);border-radius:10px;padding:4px 10px;font-weight:700;cursor:pointer;min-height:36px}
