@@ -1334,9 +1334,19 @@ document.addEventListener("click",e=>{const t=e.target.closest("button");if(!t)r
   else if(t.id==="cerrar")cerrar();
   else if(t.id==="vaciar"){if(confirm("¿Vaciar el carrito?")){const ids=Object.keys(cart);cart={};guardar();ids.forEach(refrescarBoton);pintarCarrito()}}
   else if(t.dataset.copiar)copiar(t.dataset.copiar,"Copiado");
-  else if(t.id==="copiarPedido")copiar(pedidoTexto(),"Pedido copiado");
+  else if(t.id==="copiarPedido"){copiar(pedidoTexto(),"Pedido copiado");if(!faltan())registrarPedido()}
   else if(t.dataset.foto){const p=$("fotos");p.scrollBy({left:p.clientWidth*(+t.dataset.foto),behavior:"smooth"})}});
-$("enviar").addEventListener("click",e=>{const f=faltan();if(f){e.preventDefault();toast("Completá los datos de envío");$(f).focus()}});
+$("enviar").addEventListener("click",e=>{const f=faltan();if(f){e.preventDefault();toast("Completá los datos de envío");$(f).focus();return}registrarPedido()});
+/* respaldo del pedido (solo página propia): además de WhatsApp, el pedido queda anotado. Va al Google Form marcado como «PEDIDO WEB»
+   y la tarea de cada hora lo pasa a «Pedidos web» del dashboard. Si falla, el cliente no se entera: WhatsApp sigue igual */
+let ultimoPedido="";
+const limpio=s=>String(s||"").replace(/["\\|<>]/g,"").replace(/\s+/g," ").trim().slice(0,160);
+function registrarPedido(){if(!PROPIO)return;const L=Object.entries(cart).filter(([,q])=>q>0);if(!L.length)return;const correo=ent()==="correo";
+  const d={it:L.map(([id,q])=>[id,limpio(ALL[id].n+(ALL[id].outlet?" (outlet)":"")),q,ALL[id].p]),t:total(),e:correo?"correo":"retiro",pg:pago(),
+    nom:limpio(correo?v("fNom"):v("fNom1")),dir:correo?limpio(v("fDir")):"",loc:correo?limpio(v("fLoc")):"",cp:correo?limpio(v("fCp")):""};
+  const s=JSON.stringify(d);if(s===ultimoPedido)return;ultimoPedido=s;
+  const body=new URLSearchParams({"entry.1472009643":"⭐","entry.1497647507":d.nom||"Sin nombre","entry.77100207":"PEDIDO WEB","entry.1730016467":s});
+  try{fetch(FORM.replace(/viewform$/,"formResponse"),{method:"POST",mode:"no-cors",body,keepalive:true}).catch(()=>{})}catch(err){}}
 $("velo").addEventListener("click",cerrar);
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("panel").hidden)cerrar()});
 document.querySelectorAll("input[name=ent],input[name=pago]").forEach(r=>r.addEventListener("change",()=>{guardarDatos();pintarCarrito()}));
