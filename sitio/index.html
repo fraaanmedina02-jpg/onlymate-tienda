@@ -177,8 +177,8 @@ section[id]{scroll-margin-top:110px}
 .fg-marco{position:relative;border:var(--bw) solid var(--line);border-radius:var(--r);overflow:hidden;background:#E6DCCB;box-shadow:6px 6px 0 var(--shadow)}
 .fg-pista{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
 .fg-pista::-webkit-scrollbar{display:none}
-.fg-foto{flex:0 0 100%;aspect-ratio:1/1;scroll-snap-align:center;overflow:hidden;display:grid;place-items:center}
-.fg-foto img{width:100%;height:100%;object-fit:cover;object-position:50% 70%;display:block;transition:transform .12s ease-out}
+.fg-foto{position:relative;flex:0 0 100%;aspect-ratio:1/1;scroll-snap-align:center;overflow:hidden;display:grid;place-items:center}
+.fg-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 70%;display:block;transition:transform .12s ease-out}
 .fg-foto svg{width:58%;height:58%}
 .fg-n{position:absolute;right:12px;bottom:12px;background:var(--carbon);color:var(--beige);border-radius:99px;padding:2px 10px;font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
 .fg-flecha{position:absolute;top:50%;margin-top:-22px;z-index:2}
@@ -191,7 +191,7 @@ section[id]{scroll-margin-top:110px}
 .f-stock{margin:0;font-weight:700;color:var(--ok)}
 .f-stock.pocas,.f-stock.falla{color:var(--sale)}
 .f-precio{font-size:40px;font-weight:700;font-variant-numeric:tabular-nums;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;line-height:1.1}
-.f-precio .tachado{font-size:18px;color:var(--muted);text-decoration:line-through;font-weight:500;width:100%}
+.f-precio .tachado{font-size:19px;color:var(--sale);text-decoration:line-through;text-decoration-thickness:2px;font-weight:600;width:100%}
 .f-precio .off{font-size:15px;background:var(--sale);color:#fff;border-radius:8px;padding:2px 8px;align-self:center}
 .f-pago{margin:0;color:var(--muted);font-size:15px}
 .f-comprar{display:flex;gap:12px;align-items:stretch}
@@ -249,13 +249,16 @@ section[id]{scroll-margin-top:110px}
 .badge{position:absolute;top:12px;left:12px;background:var(--beige);color:var(--carbon);border:2px solid var(--carbon);border-radius:99px;padding:2px 10px;font-size:13px;font-weight:700}
 .badge.ultimas{background:#D9A441}
 .badge.outlet{background:var(--sale);color:#fff;border-color:var(--carbon)}
+.badge.oferta{background:#F2C14E;color:#2F2B31;border-color:var(--carbon)}
+.sticker-of{position:absolute;z-index:2;top:12px;right:12px;background:#C8341C;color:#fff;border:var(--bw) solid var(--carbon);border-radius:12px;padding:5px 12px;font-family:var(--f-display);font-size:22px;line-height:1.1;white-space:nowrap;box-shadow:3px 3px 0 var(--carbon);transform:rotate(-3deg);animation:latido 2.4s ease-in-out infinite;pointer-events:none}
+@keyframes latido{0%,100%{transform:rotate(-3deg) scale(1)}50%{transform:rotate(-1deg) scale(1.06)}}
 .prod .info{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1}
 .prod .cat{font-size:12.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .prod h3{margin:0;font-size:18px;line-height:1.25}
 .prod .desc{margin:0;font-size:14px;color:var(--muted)}
 .prod .pie{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:auto;padding-top:10px}
 .precio{font-family:var(--f-display);font-size:22px;color:var(--accent-text);font-variant-numeric:tabular-nums}
-.tachado{display:block;font-size:14px;color:var(--muted);text-decoration:line-through;font-family:var(--f-body)}
+.tachado{display:block;font-size:15px;font-weight:600;color:var(--sale);text-decoration:line-through;text-decoration-thickness:2px;font-family:var(--f-body)}
 .agregar{border:var(--bw) solid var(--carbon);background:var(--verde);color:var(--beige);border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:3px 3px 0 var(--carbon);min-height:44px;white-space:nowrap}
 .agregar:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--carbon)}
 .agregar.listo{background:var(--beige);color:var(--carbon)}
@@ -263,6 +266,122 @@ section[id]{scroll-margin-top:110px}
 /* outlet */
 .outlet-band{background:var(--surface-2);border-block:var(--bw) solid var(--line)}
 .falla{display:inline-block;background:var(--sale-bg);color:var(--sale);border-radius:8px;padding:2px 8px;font-size:13px;font-weight:600}
+/* BORRADOR: outlet en desplegables por modelo */
+.aviso-borrador{position:sticky;top:0;z-index:60;background:#F2C14E;color:#2F2B31;text-align:center;font-weight:700;padding:6px 16px;border-bottom:var(--bw) solid var(--carbon)}
+.out-chips{margin-bottom:22px}
+.out-n{display:inline-block;min-width:22px;padding:0 6px;margin-left:4px;border-radius:99px;background:var(--sale-bg);color:var(--sale);font-size:13px}
+.chip[aria-pressed="true"] .out-n{background:var(--beige);color:var(--carbon)}
+.cat-tit{grid-column:1/-1;margin:14px 0 -6px;font-family:var(--f-display);font-weight:400;font-size:26px;color:var(--accent-text);display:flex;align-items:center;gap:14px}
+.cat-tit::after{content:"";flex:1;height:3px;background:var(--line);border-radius:3px;opacity:.25}
+.cat-tit:first-child{margin-top:0}
+.out-mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:22px;align-items:start}
+.out-mod .info{gap:8px}
+.om-t{display:inline;font-size:14px}
+.om-precio{display:flex;flex-direction:column;gap:2px;margin:2px 0 4px}
+.om-precio .tachado{font-size:17px}
+.om-pfila{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.om-pfila .precio{font-size:34px;line-height:1}
+.om-pfila .precio small{font-family:var(--f-body);font-size:15px;font-weight:600;color:var(--muted)}
+.om-off{background:#C8341C;color:#fff;border:2px solid var(--carbon);border-radius:10px;padding:3px 10px;font-family:var(--f-display);font-size:18px;box-shadow:2px 2px 0 var(--carbon);transform:rotate(-3deg)}
+.om-ver{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;border:var(--bw) solid var(--line);border-radius:14px;background:var(--surface-2);color:var(--ink);font:inherit;font-weight:700;padding:10px 14px;cursor:pointer;min-height:46px;box-shadow:3px 3px 0 var(--shadow)}
+.om-ver svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
+.om-ver[aria-expanded="true"] svg{transform:rotate(180deg)}
+.om-ver:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.om-lista{display:flex;flex-direction:column;gap:10px;margin-top:4px;animation:abrir .3s ease-out}
+.om-u{display:grid;grid-template-columns:76px minmax(0,1fr);grid-template-areas:"f i" "f b";gap:6px 12px;border:2px solid var(--line);border-radius:14px;padding:8px;background:var(--bg)}
+.om-uf{grid-area:f;position:relative;width:76px;height:76px;border:2px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface-2);padding:0;cursor:pointer;display:grid;place-items:center}
+.om-uf img{width:100%;height:100%;object-fit:cover;object-position:50% 70%}
+.om-uf svg{width:70%;height:70%;opacity:.5}
+.om-pronto{position:absolute;inset:auto 0 0;background:var(--carbon);color:var(--beige);font-size:10.5px;font-weight:700;text-align:center;padding:1px 0}
+.om-ui{grid-area:i;display:flex;flex-direction:column;gap:3px;min-width:0}
+.om-ui .precio{font-size:24px}
+.om-ui .tachado{display:block;font-size:15px}
+.om-x{font-size:13px;color:var(--muted);font-weight:600}
+.om-ub{grid-area:b}
+.om-ub .agregar{width:100%}
+/* outlet: miniaturas por mate debajo de la foto */
+.om-grande img.om-f{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 70%;opacity:0;transition:opacity .25s}
+.om-grande img.om-f.on{opacity:1}
+@media (hover:hover){.om-grande.dos:hover img.om-f.on{opacity:0}.om-grande.dos:hover img.om-f:not(.on){opacity:1}}
+.om-fl{position:absolute;z-index:3;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:var(--bw) solid var(--carbon);background:var(--beige);color:var(--carbon);display:grid;place-items:center;cursor:pointer;box-shadow:2px 2px 0 var(--carbon);padding:0}
+.om-fl svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.om-fl.izq{left:10px}.om-fl.der{right:10px}
+.om-fl:hover{background:#C8341C;color:#fff}
+.om-cont{position:absolute;z-index:3;right:12px;bottom:12px;background:var(--carbon);color:var(--beige);border-radius:99px;padding:2px 10px;font-size:13px;font-weight:700}
+.om-fd{margin:0;font-size:14.5px;color:var(--ink);line-height:1.45}
+.om-grande img,.om-grande svg{animation:aparecer .3s ease-out}
+@keyframes aparecer{from{opacity:.2}}
+.om-minis{display:flex;gap:8px;padding:10px 12px 0;overflow-x:auto;scrollbar-width:thin}
+.om-mini{flex:none;width:64px;border:2px solid var(--line);border-radius:10px;background:var(--surface-2);padding:0;cursor:pointer;overflow:hidden;display:flex;flex-direction:column;opacity:.75;transition:transform .15s,opacity .15s,box-shadow .15s}
+.om-mini img,.om-mini svg{width:100%;height:52px;object-fit:cover;object-position:50% 70%;display:block}
+.om-mini svg{padding:8px}
+.om-mini span{font-size:11px;font-weight:700;padding:2px 0;background:var(--surface);border-top:2px solid var(--line);color:var(--ink)}
+.om-mini:hover{opacity:1;transform:translateY(-2px)}
+.om-mini[aria-pressed="true"]{opacity:1;border-color:#C8341C;box-shadow:0 0 0 2px #C8341C}
+.om-mini[aria-pressed="true"] span{background:#C8341C;color:#fff;border-top-color:#C8341C}
+.om-sel{margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.om-sel .falla{font-size:15px;padding:3px 10px}
+.om-elegir{width:100%;border:var(--bw) solid var(--line);border-radius:14px;background:var(--surface-2);color:var(--ink);font:inherit;font-weight:700;padding:10px 14px;cursor:pointer;min-height:46px;box-shadow:3px 3px 0 var(--shadow)}
+.om-elegir:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.out-mod .pie{display:block}
+.out-mod .pie .agregar{width:100%}
+.om-grande .om-pronto{inset:auto 0 0;padding:4px 0;font-size:13px}
+.out-grupo{background:var(--surface);border:var(--bw) solid var(--line);border-radius:var(--r);box-shadow:5px 5px 0 var(--shadow);overflow:hidden}
+.out-grupo summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:12px 16px;min-height:64px}
+.out-grupo summary::-webkit-details-marker{display:none}
+.out-grupo summary:focus-visible{outline:3px solid var(--brand);outline-offset:-6px}
+.out-mini{flex:none;width:52px;height:52px;border-radius:12px;border:2px solid var(--line);background:#E6DCCB;overflow:hidden;display:grid;place-items:center}
+.out-mini img,.out-mini svg{width:100%;height:100%;object-fit:cover}
+.out-tit{flex:1;min-width:0}
+.out-tit b{display:block;font-size:19px;line-height:1.2}
+.out-tit span{color:var(--muted);font-size:14px}
+.out-desde{font-weight:700;white-space:nowrap}
+.out-flecha{flex:none;width:34px;height:34px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;transition:transform .2s}
+.out-flecha svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.out-grupo[open] .out-flecha{transform:rotate(180deg)}
+.out-cuerpo{border-top:2px solid var(--line);padding:16px}
+.out-desc{margin:0 0 14px;color:var(--muted);max-width:70ch}
+.out-unidades{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+@media (prefers-reduced-motion:reduce){.out-flecha{transition:none}}
+@media (max-width:560px){.out-desde{display:none}}
+.franja-outlet{display:block;background:#A8361A;color:#fff;border-bottom:var(--bw) solid var(--carbon);text-decoration:none}
+.franja-outlet{overflow:hidden}
+.cinta{display:flex;width:max-content;--dist:0px;animation:vaiven 6s ease-in-out infinite alternate}
+.franja-outlet:hover .cinta{animation-play-state:paused}
+@media (prefers-reduced-motion:reduce){.cinta{margin-inline:auto}}
+@keyframes vaiven{from{transform:translateX(0)}to{transform:translateX(var(--dist))}}
+.fo-item{display:inline-flex;align-items:center;gap:12px;padding:6px 18px;font-size:15px;font-weight:600;white-space:nowrap}
+.fo-item i{font-style:normal}
+.fo-tag{display:inline-block;background:var(--beige);color:#A8361A;border:var(--bw) solid var(--carbon);border-radius:14px;padding:2px 12px;font-family:var(--f-display);font-weight:400;font-size:15px;letter-spacing:.04em;box-shadow:3px 3px 0 var(--carbon);transition:transform .12s,box-shadow .12s;animation:sello 3.2s ease-in-out infinite}
+.franja-outlet:hover .fo-tag{animation:none;transform:translate(2px,2px);box-shadow:2px 2px 0 var(--carbon)}
+.franja-outlet:active .fo-tag{transform:translate(3px,3px);box-shadow:0 0 0 var(--carbon)}
+@keyframes sello{0%,78%,100%{transform:rotate(0)}84%{transform:rotate(-8deg) scale(1.08)}90%{transform:rotate(6deg) scale(1.08)}95%{transform:rotate(-3deg)}}
+.fo-pct{font-family:var(--f-display);font-weight:400;font-size:17px;color:#F2C14E}
+.fo-flecha{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#fff;color:#A8361A;border:2px solid var(--carbon);animation:empuje 1.4s ease-in-out infinite}
+@keyframes empuje{50%{transform:translateX(4px)}}
+/* BORRADOR: animaciones */
+.rev{opacity:0;transform:translateY(22px);transition:opacity .5s ease-out,transform .5s cubic-bezier(.2,.8,.2,1.15)}
+.rev.vis{opacity:1;transform:none}
+.prod.rev,.out-grupo.rev{transition:opacity .5s ease-out,transform .5s cubic-bezier(.2,.8,.2,1.15)}
+.prod{transition:transform .18s,box-shadow .18s}
+.prod:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--shadow)}
+.prod .foto img:not(.f2){transition:transform .4s}
+.prod:hover .foto img:not(.f2){transform:scale(1.04)}
+.out-grupo{transition:transform .18s,box-shadow .18s}
+.out-grupo:not([open]):hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--shadow)}
+.out-grupo[open] .out-cuerpo{animation:abrir .35s ease-out}
+@keyframes abrir{from{opacity:0;transform:translateY(-8px)}}
+.cuenta.salto{animation:salto .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes salto{40%{transform:scale(1.6) rotate(-10deg)}}
+.agregar:active{transform:scale(.94)}
+.franja-outlet:focus-visible{outline:3px solid #F2C14E;outline-offset:-5px}
+.volver{display:none;align-items:center;gap:6px;font-weight:700;color:var(--accent-text);text-decoration:none;border:var(--bw) solid var(--line);border-radius:14px;padding:8px 14px;background:var(--surface);box-shadow:3px 3px 0 var(--shadow)}
+#outlet{display:none}
+.modo-outlet #outlet{display:block}
+.modo-outlet #franjaOutlet,.modo-outlet main>.hero,.modo-outlet main>.beneficios,.modo-outlet #catalogo{display:none}
+.modo-outlet .volver{display:inline-flex}
+.modo-outlet #outlet{min-height:70vh}
+@media (prefers-reduced-motion:reduce){.fo-flecha{transition:none}}
 
 /* cómo comprar */
 .pasos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;list-style:none;margin:0;padding:0;counter-reset:p}
@@ -425,9 +544,12 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
 /* fondos alternados: catálogo beige, historia blanco, reseñas beige, preguntas blanco, redes y pie verdes */
 #preguntas{background:var(--surface);border-top:var(--bw) solid var(--line)}
 #preguntas .faq details{background:var(--bg)}
-.historia .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,440px);gap:48px;align-items:center;padding-block:64px}
+.historia .wrap{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,440px);gap:48px;align-items:center;padding-block:64px}
 .historia h2{font-family:var(--f-display);font-weight:400;font-size:clamp(32px,4.5vw,52px);line-height:1;margin:0 0 18px;color:var(--accent-text)}
 .historia p{margin:0 0 14px;max-width:54ch;font-size:17px}
+/* isotipo entre el texto y las fotos, flotando suave */
+.iso-historia{width:clamp(150px,15vw,230px);height:auto;aspect-ratio:1/1;align-self:center;animation:flotarIso 6s ease-in-out infinite alternate}
+@keyframes flotarIso{from{transform:translateY(0) rotate(-6deg)}to{transform:translateY(-12px) rotate(4deg)}}
 .firma{font-family:var(--f-display);color:var(--accent-text);font-size:22px;margin-top:8px}
 .fotos{position:relative}
 .fotos-pista{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;gap:14px;border-radius:var(--r);border:var(--bw) solid var(--line);box-shadow:6px 6px 0 var(--shadow);background:var(--surface-2)}
@@ -485,6 +607,7 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
 
 @media (max-width:900px){
   .historia .wrap{grid-template-columns:minmax(0,1fr);gap:28px}
+  .iso-historia{display:none}
   .redes{grid-template-columns:repeat(2,minmax(0,1fr))}
   .hero .wrap{grid-template-columns:minmax(0,1fr);padding-block:36px 44px}
   .escena{max-width:560px;justify-self:center;margin-bottom:-44px}
@@ -529,6 +652,7 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
     <a class="logo" href="#inicio" aria-label="OnlyMate, inicio"><span class="oo">O<svg class="oo-s" viewBox="0 0 40 30" aria-hidden="true"><path d="M 5 29 C 6 15 16 6 35 5" style="fill:none;stroke:#2F2B31;stroke-width:21;stroke-linecap:round"/></svg><svg class="oo-f" viewBox="0 0 40 30" aria-hidden="true"><path d="M 5 29 C 6 15 16 6 35 5" style="fill:none;stroke:#EFE8DC;stroke-width:10;stroke-linecap:round"/></svg></span>nlyMate</a>
     <nav class="menu" aria-label="Secciones">
       <a href="#catalogo">Catálogo</a>
+      <a href="#outlet" translate="no" class="notranslate">Outlet</a>
       <a href="#historia">Nosotros</a>
       <a href="#resenas">Reseñas</a>
       <a href="#preguntas">Preguntas</a>
@@ -551,6 +675,7 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
 </header>
 
 <main id="inicio">
+  <a class="franja-outlet" id="franjaOutlet" href="#outlet" aria-label="¿Te bancás un detallito? Outlet: mates hasta 40% OFF"><div class="cinta" aria-hidden="true"></div></a>
   <section class="hero" aria-labelledby="titulo">
     <div class="wrap">
       <div class="hero-texto">
@@ -591,6 +716,16 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
     </div>
   </section>
 
+  <section class="bloque outlet-band" id="outlet" aria-labelledby="tOut">
+    <div class="wrap">
+      <div class="cab">
+        <div><h2 id="tOut" translate="no" class="notranslate">Outlet</h2><p>Mates con alguna falla, más baratos. Elegí el tipo de mate y mirá cada uno con su foto y qué tiene.</p></div>
+        <a class="volver" href="#inicio">← Volver a la tienda</a>
+      </div>
+      <div id="grillaOutlet"></div>
+    </div>
+  </section>
+
   <section class="historia" id="historia" aria-labelledby="tHis">
     <div class="wrap">
       <div>
@@ -599,12 +734,13 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
         <p>Empezamos con unos pocos mates en casa, sin imaginar hasta dónde podía llegar. Hoy tenemos nuestros propios productos, packaging, pedidos que llegan a otras provincias y un proyecto que no para de crecer. Cada venta nos permite reinvertir, mejorar y soñar un poquito más grande.</p>
         <p>Seguimos siendo los mismos dos chicos que arrancaron desde cero, solo que ahora hay mucho más detrás de cada pedido, horas de trabajo, aprendizajes y una ilusión enorme. Porque no se trata solamente de vender mates, sino de construir algo nuestro y compartirlo con ustedes.</p>
       </div>
+      <svg class="iso-deco iso-historia" aria-hidden="true"><use href="#iso3d"/></svg>
       <div class="fotos">
         <div class="fotos-pista" id="fotos" tabindex="0" aria-label="Fotos de nuestra historia">
+          <figure><img src="img/historia4.jpg" alt="Mesa con mates mientras armamos pedidos" loading="lazy"></figure>
           <figure><img src="img/historia1.jpg" alt="Los estantes con los primeros mates" loading="lazy"></figure>
           <figure><img src="img/historia2.jpg" alt="Bolsas con el sello de OnlyMate" loading="lazy"></figure>
           <figure><img src="img/historia3.jpg" alt="El espacio lleno de mates" loading="lazy"></figure>
-          <figure><img src="img/historia4.jpg" alt="Mesa con mates mientras armamos pedidos" loading="lazy"></figure>
           <figure><img src="img/historia5.jpg" alt="Pedidos listos para despachar" loading="lazy"></figure>
           <figure><img src="img/historia6.jpg" alt="OnlyMate hoy" loading="lazy"></figure>
         </div>
@@ -782,7 +918,7 @@ footer .chiquito{grid-column:1/-1;border-top:1px solid rgba(239,232,220,.2);padd
 </aside>
 
 <!-- Datos del dashboard: este bloque lo reescribe sync-tienda.ps1 (no editar a mano) -->
-<script type="application/json" id="datos">{"actualizado":"2026-11-20T22:05","productos":[{"id":"ONLY001","n":"Imperial negro","cat":"01 - Imperiales","color":"Negro","caract":"Imperial guarda de Acero color negro interior Calabaza - tamaño surtido","p":38900,"s":0,"e":"sin","v":0},{"id":"ONLY002","n":"Imperial marron","cat":"01 - Imperiales","color":"Marron","caract":"Imperial guarda de acero color marrón int. Calabaza","p":38900,"s":0,"e":"sin","v":0},{"id":"ONLY003","n":"Imperial acero inoxidable negro","cat":"01 - Imperiales","color":"Negro","caract":"Imperial guarda de acero, int. acero térmico - color negro","p":35900,"s":1,"e":"ok","v":0},{"id":"ONLY004","n":"Imperial acero inoxidable marron","cat":"01 - Imperiales","color":"Marron","caract":"Imperial guarda de acero color marrón Int. Acero térmico","p":35900,"s":1,"e":"ok","v":0},{"id":"ONLY006","n":"Imperial base bolita marron","cat":"01 - Imperiales","color":"Marron","caract":"mate imperial BASE DE ALPACA Y PELOTAS - guarda de alpaca - cuero borravino liso - calabaza - tamaño variado","p":49900,"s":1,"e":"ok","v":0},{"id":"ONLY010","n":"Imperial criollo negro","cat":"01 - Imperiales","color":"Criollo negro","caract":"IMPERIAL CRIOLLO GUARDA DE ALPACA - CALABAZA - CUERO REPUJADO NEGRO","p":48900,"s":1,"e":"ok","v":0},{"id":"ONLY011","n":"Imperial criollo marron","cat":"01 - Imperiales","color":"Criollo marron","caract":"IMPERIAL CRIOLLO GUARDA DE ALPACA – CALABAZA – CUERO REPUJADO BORRAVINO","p":48900,"s":0,"e":"sin","v":0},{"id":"ONLY012","n":"Imperial premium mini negro","cat":"01 - Imperiales","color":"Negro","caract":"No esta en el catálogo","p":48900,"s":1,"e":"ok","v":0},{"id":"ONLY014","n":"Imperial algarrobo laqueado","cat":"01 - Imperiales","color":"Algarrobo","caract":"Imperial MADERA LAQUEADA BRILLOSO. Guarda de acero","p":32900,"s":1,"e":"ok","v":0},{"id":"ONLY024","n":"Imperial semi-premium negro","cat":"01 - Imperiales","color":"Negro","caract":"mate imperial BASE DE ALPACA Y PELOTAS – guarda de alpaca – cuero negro repujado – calabaza – tamaño variado","p":52900,"s":0,"e":"sin","v":0},{"id":"ONLY025","n":"Imperial semi-premium marron","cat":"01 - Imperiales","color":"Marron","caract":"mate imperial BASE DE ALPACA Y PELOTAS – guarda de alpaca – cuero marron repujado – calabaza – tamaño variado","p":52900,"s":0,"e":"sin","v":0},{"id":"ONLY030","n":"Torpedo uruguayo premium suela","cat":"02 - Torpedos","color":"Suela","caract":"TORPEDO VIROLA URUGUAYA CINCELADA AL LACRE con cuero AMADERADO suela","p":62900,"s":4,"e":"ok","v":0},{"id":"ONLY039","n":"Torpedo criollo marron","cat":"02 - Torpedos","color":"Criollo marron","caract":"Torpedo criollo cuero repujado virola de alpaca BORRAVINO","p":46900,"s":0,"e":"sin","v":0},{"id":"ONLY042","n":"Torpedo base de alpaca negro","cat":"02 - Torpedos","color":"Negro","caract":"TORPEDO VIROLA DE ALPACA CINCELADA – CUERO LISO NEGRO – BASE DE ALPACA ANCHA","p":42900,"s":0,"e":"sin","v":0},{"id":"ONLY043","n":"Torpedo base de alpaca marron","cat":"02 - Torpedos","color":"Marron","caract":"TORPEDO VIROLA DE ALPACA CINCELADA – CUERO LISO BORRAVINO – BASE DE ALPACA ANCHA","p":42900,"s":0,"e":"sin","v":0},{"id":"ONLY044","n":"Torpedo cuero crudo base bolita","cat":"02 - Torpedos","color":"Cuero crudo","caract":"No esta en el catálogo","p":56900,"s":2,"e":"ok","v":0},{"id":"ONLY045","n":"Torpedo premium negro","cat":"02 - Torpedos","color":"Negro","caract":"TORPEDO VIROLA DE ALPACA CINCELADA – CALABAZA – CUERO REPUJADO NEGRO – BASE DE ALPACA ANCHA – PELOTAS DE BRONCE","p":49900,"s":0,"e":"sin","v":0},{"id":"ONLY046","n":"Torpedo premium marron","cat":"02 - Torpedos","color":"Marron","caract":"TORPEDO VIROLA DE ALPACA CINCELADA – CALABAZA – CUERO REPUJADO BORRAVINO – BASE DE ALPACA ANCHA – PELOTAS DE BRONCE","p":49900,"s":0,"e":"sin","v":0},{"id":"ONLY048","n":"Bombilla","cat":"05 - Bombillas","color":"bombilla","caract":"Bombilla pico de loro de acero inoxidable con filtro/pala CORTA 16cm","p":8900,"s":18,"e":"ok","v":0},{"id":"ONLY049","n":"Camionero negro","cat":"03 - Camioneros","color":"Negro","caract":"camionero – virola de acero – cuero negro – calabaza","p":29900,"s":0,"e":"sin","v":0},{"id":"ONLY050","n":"Camionero marron","cat":"03 - Camioneros","color":"Marron","caract":"mate camionero – virola de acero – cuero borravino – calabaza","p":29900,"s":0,"e":"sin","v":0},{"id":"ONLY051","n":"Camionero cincelado negro","cat":"03 - Camioneros","color":"Negro","caract":"CAMIONERO 100% CALABAZA VIROLA CINCELADA DE ALPACA – NEGRO","p":35900,"s":0,"e":"sin","v":0},{"id":"ONLY052","n":"Camionero cincelado marron","cat":"03 - Camioneros","color":"Marron","caract":"CAMIONERO 100% CALABAZA VIROLA CINCELADA DE ALPACA – BORRAVINO","p":35900,"s":0,"e":"sin","v":0},{"id":"ONLY053","n":"Camionero algarrobo","cat":"03 - Camioneros","color":"Algarrobo","caract":"Camionero 100% algarrobo virola acero PREMIUM","p":28900,"s":4,"e":"ok","v":0},{"id":"ONLY055","n":"Camionero criollo","cat":"03 - Camioneros","color":"Criollo calabaza","caract":"Mate de calabaza CAMIONERO criollo base de cuero cocida SIN VIROLA","p":29900,"s":3,"e":"ok","v":0},{"id":"ONLY058","n":"Media canasta suela","cat":"08 - Medias canastas","color":"Canasta","caract":"MEDIA canasta 100% cuero – Marron","p":42900,"s":3,"e":"ok","v":0},{"id":"ONLY059","n":"Canasta negra","cat":"09 - Canastas","color":"Canasta","caract":"No esta en el catálogo","p":42900,"s":3,"e":"ok","v":0},{"id":"ONLY060","n":"Canasta marron","cat":"09 - Canastas","color":"Canasta","caract":"Canasta 100% cuero grande color MARRON","p":42900,"s":0,"e":"sin","v":0},{"id":"ONLY061","n":"Yerba Canarias 1kg","cat":"10 - Yerbas","color":"Yerba","caract":"Tradicional 1kg","p":13900,"s":10,"e":"ok","v":0},{"id":"ONLY062","n":"Yerba Baldo 1kg","cat":"10 - Yerbas","color":"Yerba","caract":"Baldo 1kg","p":13900,"s":7,"e":"ok","v":1},{"id":"ONLY063","n":"Yerba verdecita 1kg","cat":"10 - Yerbas","color":"Yerba","caract":"Verdecita 1kg","p":10900,"s":1,"e":"ok","v":0},{"id":"ONLY064","n":"Yerba Rei Verde 1kg","cat":"10 - Yerbas","color":"Yerba","caract":"Premium 1kg","p":13900,"s":5,"e":"ok","v":0},{"id":"ONLY065","n":"Lata Baldo","cat":"11 - Yerberos u otros","color":"Yerbera","caract":"LATA YERBERA BALDO 500GR CON PICO VERTEDOR Y VISOR LATERAL (CIERRE HERMÉTICO)","p":28900,"s":0,"e":"sin","v":0},{"id":"ONLY090","n":"Bombillon","cat":"06 - Bombillones","color":"bombillon","caract":"Bombillon de alpaca con pico de bronce recto. caño labrado con 2 dijes ALPACA/BRONCE (18cm)","p":28900,"s":4,"e":"ok","v":0},{"id":"ONLY091","n":"Bombillon pico de loro","cat":"06 - Bombillones","color":"bombillon","caract":"Bombillon de alpaca - PICO LORO. caño labrado con 2 dijes ALPACA/BRONCE (18cm)","p":28900,"s":0,"e":"sin","v":0},{"id":"ONLY092","n":"Termo media manija negro","cat":"07 - Termos","color":"termo","caract":"Termo media manija 1 LITRO PICO CEBADOR color negro (TAPA SURTIDA)","p":36900,"s":5,"e":"ok","v":1},{"id":"ONLY094","n":"Termo system","cat":"07 - Termos","color":"termo","caract":"TERMO PICO SYSTEM 1 LITRO - COLOR NEGRO","p":46900,"s":0,"e":"sin","v":0},{"id":"ONLY095","n":"Media canasta negra","cat":"08 - Medias canastas","color":"Canasta","caract":"MEDIA canasta 100% cuero - Negra","p":42900,"s":3,"e":"ok","v":0},{"id":"ONLY096","n":"Apoyamates","cat":"11 - Yerberos u otros","color":"Negro","caract":"Falta cargar costo y precio","p":3500,"s":4,"e":"ok","v":0},{"id":"ONLY097","n":"Yerbera","cat":"11 - Yerberos u otros","color":"Marron","caract":"Falta cargar costo y precio","p":14900,"s":5,"e":"ok","v":0}],"outlet":[{"id":"OUT001","n":"Camionero algarrobo","pid":"ONLY053","o":28900,"p":16900,"s":1,"f":"Usado"},{"id":"OUT002","n":"Imperial algarrobo laqueado","pid":"ONLY014","o":32900,"p":19900,"s":1,"f":"Se puede arreglar"},{"id":"OUT003","n":"Torpedo uruguayo premium suela","pid":"ONLY030","o":62900,"p":44900,"s":1,"f":"Mala forma"},{"id":"OUT004","n":"Imperial marron","pid":"ONLY002","o":38900,"p":24900,"s":1,"f":"Rajadura pegada dentro de la calabaza"},{"id":"OUT005","n":"Camionero bajo","pid":"ONLY098","o":27900,"p":19900,"s":4,"f":"Mala forma"},{"id":"OUT006","n":"Torpedo bronce","pid":"ONLY067","o":36900,"p":26900,"s":1,"f":"Mala forma, no se puede vender a precio normal"},{"id":"OUT007","n":"Camionero criollo","pid":"ONLY055","o":29900,"p":19900,"s":1,"f":"Tamaño feo"},{"id":"OUT008","n":"Mate galleta","pid":"ONLY068","o":32900,"p":22900,"s":2,"f":"Base fallada"},{"id":"OUT009","n":"Mate galleta","pid":"ONLY068","o":32900,"p":19900,"s":1,"f":"Tiene un poco de hilo y está usado"},{"id":"OUT010","n":"Imperial Argentina","pid":"ONLY081","o":48900,"p":32900,"s":2,"f":"Virola despegada"}],"resenas":[{"id":"GF20261120170215","n":"Susana Alonso Neuquen","e":5,"t":"Compre  varios mates y bombillas, también canasta de cuero. Todo excelente y muy buena la atención y presentación","f":"2026-11-20","pid":"ONLY001"},{"id":"GF20261120165722","n":"Bruno de Neuquén","e":5,"t":"Está buenísima y duradera","f":"2026-11-20","pid":"ONLY059"},{"id":"GF20261119081600","n":"Martin","e":5,"t":"Muy buena la calidad y con unos precios increíbles, lo recomiendo. Los vendedores son muy facheros.","f":"2026-11-19","pid":"ONLY001"},{"id":"GF20261119081129","n":"Pedro Lavaggi","e":5,"t":"Muy buena atencion, buenos productos y de alta calidad, prime.","f":"2026-11-19","pid":"ONLY091"},{"id":"GF20261118225738","n":"Santiago Medina","e":5,"t":"Muy buenos mates y de buena calidad me gustó mucho","f":"2026-11-18","pid":"ONLY014"}]}</script>
+<script type="application/json" id="datos">{"actualizado":"2026-11-22T02:48","productos":[{"id":"ONLY001","n":"Imperial negro","cat":"01 - Imperiales","color":"Negro","caract":"Imperial guarda de Acero color negro interior Calabaza - tamaño surtido","p":38900,"s":0,"e":"sin","v":0},{"id":"ONLY002","n":"Imperial marron","cat":"01 - Imperiales","color":"Marron","caract":"Imperial guarda de acero color marrón int. Calabaza","p":38900,"s":0,"e":"sin","v":0},{"id":"ONLY003","n":"Imperial acero inoxidable negro","cat":"01 - Imperiales","color":"Negro","caract":"Imperial guarda de acero, int. acero térmico - color negro","p":35900,"s":1,"e":"ok","v":0},{"id":"ONLY004","n":"Imperial acero inoxidable marron","cat":"01 - Imperiales","color":"Marron","caract":"Imperial guarda de acero color marrón Int. Acero térmico","p":35900,"s":1,"e":"ok","v":0},{"id":"ONLY006","n":"Imperial base bolita marron","cat":"01 - Imperiales","color":"Marron","caract":"mate imperial BASE DE ALPACA Y PELOTAS - guarda de alpaca - cuero borravino liso - calabaza - tamaño variado","p":49900,"s":1,"e":"ok","v":0,"of":36900},{"id":"ONLY010","n":"Imperial criollo negro","cat":"01 - Imperiales","color":"Criollo negro","caract":"IMPERIAL CRIOLLO GUARDA DE ALPACA - CALABAZA - CUERO REPUJADO NEGRO","p":48900,"s":1,"e":"ok","v":0},{"id":"ONLY011","n":"Imperial criollo marron","cat":"01 - Imperiales","color":"Criollo marron","caract":"IMPERIAL CRIOLLO GUARDA DE ALPACA – CALABAZA – CUERO REPUJADO BORRAVINO","p":48900,"s":0,"e":"sin","v":0},{"id":"ONLY012","n":"Imperial premium mini negro","cat":"01 - Imperiales","color":"Negro","caract":"No esta en el catálogo","p":48900,"s":1,"e":"ok","v":0},{"id":"ONLY014","n":"Imperial algarrobo laqueado","cat":"01 - Imperiales","color":"Algarrobo","caract":"Imperial MADERA LAQUEADA BRILLOSO. Guarda de acero","p":32900,"s":1,"e":"ok","v":0},{"id":"ONLY024","n":"Imperial semi-premium negro","cat":"01 - Imperiales","color":"Negro","caract":"mate imperial BASE DE ALPACA Y PELOTAS – guarda de alpaca – cuero negro repujado – calabaza – tamaño variado","p":52900,"s":0,"e":"sin","v":0},{"id":"ONLY025","n":"Imperial semi-premium marron","cat":"01 - Imperiales","color":"Marron","caract":"mate imperial BASE DE ALPACA Y PELOTAS – guarda de alpaca – cuero marron repujado – calabaza – tamaño variado","p":52900,"s":0,"e":"sin","v":0},{"id":"ONLY030","n":"Torpedo uruguayo premium suela","cat":"02 - Torpedos","color":"Suela","caract":"TORPEDO VIROLA URUGUAYA CINCELADA AL LACRE con cuero AMADERADO suela","p":62900,"s":4,"e":"ok","v":0},{"id":"ONLY039","n":"Torpedo criollo marron","cat":"02 - Torpedos","color":"Criollo marron","caract":"Torpedo criollo cuero repujado virola de alpaca BORRAVINO","p":46900,"s":0,"e":"sin","v":0},{"id":"ONLY042","n":"Torpedo base de alpaca negro","cat":"02 - Torpedos","color":"Negro","caract":"TORPEDO VIROLA DE ALPACA CINCELADA – CUERO LISO NEGRO – BASE DE ALPACA ANCHA","p":42900,"s":0,"e":"sin","v":0},{"id":"ONLY043","n":"Torpedo base de alpaca marron","cat":"02 - Torpedos","color":"Marron","caract":"TORPEDO VIROLA DE ALPACA CINCELADA – CUERO LISO BORRAVINO – BASE DE ALPACA ANCHA","p":42900,"s":0,"e":"sin","v":0},{"id":"ONLY044","n":"Torpedo cuero crudo base bolita","cat":"02 - Torpedos","color":"Cuero crudo","caract":"No esta en el catálogo","p":56900,"s":2,"e":"ok","v":0},{"id":"ONLY045","n":"Torpedo premium negro","cat":"02 - Torpedos","color":"Negro","caract":"TORPEDO VIROLA DE ALPACA CINCELADA – CALABAZA – CUERO REPUJADO NEGRO – BASE DE ALPACA ANCHA – PELOTAS DE BRONCE","p":49900,"s":0,"e":"sin","v":0},{"id":"ONLY046","n":"Torpedo premium marron","cat":"02 - Torpedos","color":"Marron","caract":"TORPEDO VIROLA DE ALPACA CINCELADA – CALABAZA – CUERO REPUJADO BORRAVINO – BASE DE ALPACA ANCHA – PELOTAS DE BRONCE","p":49900,"s":0,"e":"sin","v":0},{"id":"ONLY048","n":"Bombilla","cat":"05 - Bombillas","color":"bombilla","caract":"Bombilla pico de loro de acero inoxidable con filtro/pala CORTA 16cm","p":8900,"s":18,"e":"ok","v":0},{"id":"ONLY049","n":"Camionero negro","cat":"03 - Camioneros","color":"Negro","caract":"camionero – virola de acero – cuero negro – calabaza","p":29900,"s":0,"e":"sin","v":0},{"id":"ONLY050","n":"Camionero marron","cat":"03 - Camioneros","color":"Marron","caract":"mate camionero – virola de acero – cuero borravino – calabaza","p":29900,"s":0,"e":"sin","v":0},{"id":"ONLY051","n":"Camionero cincelado negro","cat":"03 - Camioneros","color":"Negro","caract":"CAMIONERO 100% CALABAZA VIROLA CINCELADA DE ALPACA – NEGRO","p":35900,"s":0,"e":"sin","v":0},{"id":"ONLY052","n":"Camionero cincelado marron","cat":"03 - Camioneros","color":"Marron","caract":"CAMIONERO 100% CALABAZA VIROLA CINCELADA DE ALPACA – BORRAVINO","p":35900,"s":0,"e":"sin","v":0},{"id":"ONLY053","n":"Camionero algarrobo","cat":"03 - Camioneros","color":"Algarrobo","caract":"Camionero 100% algarrobo virola acero PREMIUM","p":28900,"s":4,"e":"ok","v":0},{"id":"ONLY055","n":"Camionero criollo","cat":"03 - Camioneros","color":"Criollo calabaza","caract":"Mate de calabaza CAMIONERO criollo base de cuero cocida SIN VIROLA","p":29900,"s":3,"e":"ok","v":0},{"id":"ONLY058","n":"Media canasta suela","cat":"08 - Medias canastas","color":"Canasta","caract":"MEDIA canasta 100% cuero – Marron","p":42900,"s":3,"e":"ok","v":0},{"id":"ONLY059","n":"Canasta negra","cat":"09 - Canastas","color":"Canasta","caract":"No esta en el catálogo","p":42900,"s":3,"e":"ok","v":0},{"id":"ONLY060","n":"Canasta marron","cat":"09 - Canastas","color":"Canasta","caract":"Canasta 100% cuero grande color MARRON","p":42900,"s":0,"e":"sin","v":0},{"id":"ONLY061","n":"Yerba Canarias 1kg","cat":"10 - Yerbas","color":"Yerba","caract":"Tradicional 1kg","p":13900,"s":10,"e":"ok","v":0},{"id":"ONLY062","n":"Yerba Baldo 1kg","cat":"10 - Yerbas","color":"Yerba","caract":"Baldo 1kg","p":13900,"s":7,"e":"ok","v":1},{"id":"ONLY063","n":"Yerba verdecita 1kg","cat":"10 - Yerbas","color":"Yerba","caract":"Verdecita 1kg","p":10900,"s":1,"e":"ok","v":0},{"id":"ONLY064","n":"Yerba Rei Verde 1kg","cat":"10 - Yerbas","color":"Yerba","caract":"Premium 1kg","p":13900,"s":5,"e":"ok","v":0},{"id":"ONLY065","n":"Lata Baldo","cat":"11 - Yerberos u otros","color":"Yerbera","caract":"LATA YERBERA BALDO 500GR CON PICO VERTEDOR Y VISOR LATERAL (CIERRE HERMÉTICO)","p":28900,"s":0,"e":"sin","v":0},{"id":"ONLY067","n":"Torpedo bronce","cat":"02 - Torpedos","color":"negro","caract":"Torpedo virola de bronce cincelado","p":36900,"s":1,"e":"ok","v":0,"of":26900},{"id":"ONLY090","n":"Bombillon","cat":"06 - Bombillones","color":"bombillon","caract":"Bombillon de alpaca con pico de bronce recto. caño labrado con 2 dijes ALPACA/BRONCE (18cm)","p":28900,"s":4,"e":"ok","v":0},{"id":"ONLY091","n":"Bombillon pico de loro","cat":"06 - Bombillones","color":"bombillon","caract":"Bombillon de alpaca - PICO LORO. caño labrado con 2 dijes ALPACA/BRONCE (18cm)","p":28900,"s":0,"e":"sin","v":0},{"id":"ONLY092","n":"Termo media manija negro","cat":"07 - Termos","color":"termo","caract":"Termo media manija 1 LITRO PICO CEBADOR color negro (TAPA SURTIDA)","p":36900,"s":5,"e":"ok","v":1},{"id":"ONLY094","n":"Termo system","cat":"07 - Termos","color":"termo","caract":"TERMO PICO SYSTEM 1 LITRO - COLOR NEGRO","p":46900,"s":0,"e":"sin","v":0},{"id":"ONLY095","n":"Media canasta negra","cat":"08 - Medias canastas","color":"Canasta","caract":"MEDIA canasta 100% cuero - Negra","p":42900,"s":3,"e":"ok","v":0},{"id":"ONLY096","n":"Apoyamates","cat":"11 - Yerberos u otros","color":"Negro","caract":"Falta cargar costo y precio","p":3500,"s":4,"e":"ok","v":0},{"id":"ONLY097","n":"Yerbera","cat":"11 - Yerberos u otros","color":"Marron","caract":"Falta cargar costo y precio","p":14900,"s":5,"e":"ok","v":0},{"id":"ONLY098","n":"Camionero bajo","cat":"03 - Camioneros","color":"Negro","caract":"Las 4 unidades están en outlet por mala forma. Falta cargar costo y precio","p":27900,"s":4,"e":"ok","v":0,"of":19900}],"outlet":[{"id":"OUT003","n":"Torpedo uruguayo premium suela","pid":"ONLY030","o":62900,"p":44900,"s":1,"f":"Mala forma"},{"id":"OUT004","n":"Imperial marron","pid":"ONLY002","o":38900,"p":24900,"s":1,"f":"Rajadura pegada dentro de la calabaza"},{"id":"OUT007","n":"Camionero criollo","pid":"ONLY055","o":29900,"p":19900,"s":1,"f":"Tamaño feo"},{"id":"OUT008","n":"Mate galleta","pid":"ONLY068","o":32900,"p":22900,"s":2,"f":"Base fallada"}],"resenas":[{"id":"GF20261120215238","n":"Livia","e":5,"t":"Hermosos los mates\\!\\!\\! Muy buena la calidad y excelente la presentación\\!\\! Ideal para regalo.","f":"2026-11-20","pid":"ONLY024"},{"id":"GF20261120210246","n":"mar","e":5,"t":"espectacular no se tapa nunca la bombilla","f":"2026-11-20","pid":"ONLY048"},{"id":"GF20261120170215","n":"Susana Alonso Neuquen","e":5,"t":"Compre  varios mates y bombillas, también canasta de cuero. Todo excelente y muy buena la atención y presentación","f":"2026-11-20","pid":"ONLY001"},{"id":"GF20261120165722","n":"Bruno de Neuquén","e":5,"t":"Está buenísima y duradera","f":"2026-11-20","pid":"ONLY059"},{"id":"GF20261119081600","n":"Martin","e":5,"t":"Muy buena la calidad y con unos precios increíbles, lo recomiendo. Los vendedores son muy facheros.","f":"2026-11-19","pid":"ONLY001"},{"id":"GF20261119081129","n":"Pedro Lavaggi","e":5,"t":"Muy buena atencion, buenos productos y de alta calidad, prime.","f":"2026-11-19","pid":"ONLY091"},{"id":"GF20261118225738","n":"Santiago Medina","e":5,"t":"Muy buenos mates y de buena calidad me gustó mucho","f":"2026-11-18","pid":"ONLY014"}]}</script>
 
 <script>
 (function(){
@@ -836,13 +972,18 @@ const VISTA={
  ONLY097:{n:"Yerbera",d:"Bolsa marrón con cierre para llevar la yerba a todos lados.",dl:"Esta es una yerbera: una bolsa marrón con cierre para llevar la yerba a todos lados.",t:"yerbera",col:"#06402B",img:"img/productos/yerbera-1.jpg",img2:"img/productos/yerbera-2.jpg"},
  OUT001:{t:"camionero",col:"#8B5A2B",f:"Usado"},
  OUT002:{t:"imperial",col:"#9A5B2D",f:"Necesita un arreglo"},
- OUT003:{t:"torpedo",col:"#A0663A",f:"Forma irregular"},
- OUT004:{n:"Imperial marrón",t:"imperial",col:"#6B3B24",f:"Rajadura pegada por dentro"},
+ OUT003:{t:"torpedo",col:"#A0663A",f:"Forma irregular",img:"img/outlet/out003-1.jpg",img2:"img/outlet/out003-2.jpg",fd:"Tamaño irregular: la calabaza no quedó pareja."},
+ OUT004:{n:"Imperial marrón",t:"imperial",col:"#6B3B24",f:"Rajadura pegada por dentro",img:"img/outlet/out004-1.jpg",img2:"img/outlet/out004-2.jpg",fd:"Rajadura en la calabaza, ya pegada."},
  OUT005:{t:"camionero",col:"#6B3B24",f:"Forma irregular"},
+ ONLY067:{t:"torpedo",col:"#2F2B31",d:"Virola de bronce cincelado.",img:"img/productos/torpedo-bronce-1.jpg",img2:"img/productos/torpedo-bronce-2.jpg"},
+ ONLY068:{n:"Mate galleta",d:"Calabaza con base de cuero suela.",t:"camionero",col:"#C9A97A",img:"img/productos/mate-galleta-1.jpg",img2:"img/productos/mate-galleta-2.jpg"},
+ ONLY098:{n:"Camionero bajo",d:"Calabaza forrada en cuero negro, virola de acero y base de cuero.",dl:"Este es un mate camionero bajo de calabaza, forrado en cuero negro, con virola ancha de acero y base de cuero cosida. Es petiso y panzón, cómodo para tener en la mano.",t:"camionero",col:"#2F2B31",img:"img/productos/camionero-bajo-1.jpg",img2:"img/productos/camionero-bajo-2.jpg"},
  OUT006:{t:"torpedo",col:"#2F2B31",f:"Forma irregular",img:"img/productos/torpedo-bronce-1.jpg",img2:"img/productos/torpedo-bronce-2.jpg"},
- OUT007:{t:"camionero",col:"#B08A55",f:"Tamaño irregular"},
- OUT008:{t:"camionero",col:"#C9A97A",f:"Base con falla"},
- OUT009:{t:"camionero",col:"#C9A97A",f:"Usado, con un hilo suelto"},
+ OUT007:{oculto:true,t:"camionero",col:"#B08A55",f:"Tamaño irregular",fd:"Tamaño irregular: más alto y más estrecho que el resto."},
+ OUT008:{t:"camionero",col:"#C9A97A",f:"Base con falla",fd:"Base de cuero muy grande para el mate."},
+ "OUT008-1":{img:"img/outlet/out008-1.jpg",fd:"Base de cuero muy grande: la calabaza queda floja y toca la mesa."},
+ "OUT008-2":{img:"img/outlet/out008-2.jpg",fd:"Base de cuero muy grande: la calabaza se hunde y toca la mesa."},
+ OUT009:{t:"camionero",col:"#C9A97A",f:"Usado, con un hilo suelto",fd:"Es un mate que ya se usó y tiene un poco de hilo suelto en la costura."},
  OUT010:{t:"imperial",col:"#2F2B31",f:"Virola despegada"}
 };
 const CATS=["Todos","Mates","Bombillas","Termos","Canastas","Yerbas","Accesorios"];
@@ -860,10 +1001,74 @@ function textoDe(c){c=String(c||"").trim();if(!c||/no esta en el cat|falta carga
   c=c.replace(/\s*[–-]\s*/g,", ").replace(/\s+/g," ");return c.charAt(0).toUpperCase()+c.slice(1)+(/[.]$/.test(c)?"":".")}
 
 /* solo se muestran los productos con stock */
+/* outlet: los que tienen oculto:true en VISTA no se muestran (ej. hasta tener su foto). Ofertas: precio de oferta del dashboard (campo "of" que manda sync-tienda.ps1) */
+DATOS.outlet=DATOS.outlet.filter(x=>!(VISTA[x.id]||{}).oculto);
+const OFERTA={};DATOS.productos.forEach(x=>{if(x.of)OFERTA[x.id]=x.of});
 const PRODUCTOS=DATOS.productos.filter(x=>x.e==="ok"&&x.s>0).map(x=>{const v=VISTA[x.id]||{};const t=v.t||dibujoDe(x.cat,x.n);
   return{id:x.id,n:v.n||x.n,c:catDe(x.cat),t,col:v.col||colorDe(t,x.n+" "+x.color+" "+x.caract),p:x.p,s:x.e==="ok"?x.s:0,d:v.d||textoDe(x.caract),dl:v.dl||"",img:v.img||"",img2:v.img2||"",v:x.v||0,outlet:false}});
-/* el outlet no se muestra en la tienda (los datos siguen llegando del dashboard) */const OUTLET=[];const OUTLET_OCULTO=DATOS.outlet.map(x=>{const v=VISTA[x.id]||{};const base=DATOS.productos.find(p=>p.id===x.pid);const t=v.t||dibujoDe(base?base.cat:"01",x.n);
-  return{id:x.id,n:v.n||x.n,c:"Outlet",t,col:v.col||colorDe(t,x.n),o:x.o,p:x.p,s:x.s,f:v.f||x.f,img:v.img||"",img2:v.img2||"",outlet:true}});
+PRODUCTOS.forEach(p=>{const of=OFERTA[p.id];if(of&&of<p.p){p.o=p.p;p.p=of;p.oferta=true}});
+/* BORRADOR: el outlet se muestra. Cada mate usa su propia foto si se carga en VISTA con su código (ej. OUT005:{img:"img/outlet/out005-1.jpg"}; las fotos del outlet van en web/borrador/fotos-outlet para que no se suban con web/img); si no, la del modelo normal */
+/* cada unidad del outlet va por separado (si en el dashboard hay "2", salen 2 mates, cada uno con su foto: VISTA["OUT008-1"], VISTA["OUT008-2"]) */
+const OUTLET=DATOS.outlet.filter(x=>x.s>0).flatMap(x=>x.s>1?Array.from({length:x.s},(_,j)=>Object.assign({},x,{id:x.id+"-"+(j+1),base:x.id,s:1})):[x]).map(x=>{const v=Object.assign({},VISTA[x.base]||{},VISTA[x.id]||{});const vb=VISTA[x.pid]||{};const base=DATOS.productos.find(p=>p.id===x.pid);const t=v.t||vb.t||dibujoDe(base?base.cat:"01",x.n);
+  return{id:x.id,pid:x.pid,n:v.n||x.n,c:"Outlet",t,col:v.col||vb.col||colorDe(t,x.n),o:x.o,p:x.p,s:x.s,f:v.f||x.f,img:v.img||vb.img||"",img2:v.img?(v.img2||""):(vb.img2||""),fotoPropia:!!v.img,fd:v.fd||"",d:vb.dl||vb.d||(base?textoDe(base.caract):""),outlet:true}});
+/* BORRADOR: franja de la portada y outlet como página aparte (#outlet) */
+(function(){const f=document.getElementById("franjaOutlet");if(!OUTLET.length){f.hidden=true;return}
+  const pct=Math.max.apply(null,OUTLET.map(x=>x.o>x.p?Math.round((1-x.p/x.o)*100):0));
+  const item='<span class="fo-item"><i>¿Te bancás un detallito?</i><span class="fo-tag notranslate" translate="no">OUTLET</span><span>Mates hasta <span class="fo-pct">'+pct+'%</span> OFF</span></span>';
+  const cinta=f.querySelector(".cinta");cinta.innerHTML=item;
+  /* va de un borde al otro y vuelve; en pantallas angostas recorre el texto para que se lea entero */
+  const medir=()=>cinta.style.setProperty("--dist",(f.clientWidth-cinta.scrollWidth)+"px");medir();addEventListener("resize",medir);if(document.fonts)document.fonts.ready.then(medir);f.setAttribute("aria-label","¿Te bancás un detallito? Outlet: mates hasta "+pct+"% OFF")})();
+/* BORRADOR: aparición suave al bajar, y salto del carrito al agregar */
+(function(){if(!("IntersectionObserver" in window)||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const el=e.target;el.classList.add("vis");io.unobserve(el);setTimeout(()=>{el.classList.remove("rev","vis");el.style.transitionDelay=""},900)}}),{rootMargin:"0px 0px -40px 0px"});
+  const SEL=".prod,.out-grupo,.paso,.bloque .cab,.historia .wrap>*,.comunidad .wrap>*";
+  const marcar=()=>{let i=0;document.querySelectorAll(SEL).forEach(el=>{if(el.dataset.rev)return;el.dataset.rev="1";const r=el.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)return;el.classList.add("rev");el.style.transitionDelay=((i++%4)*70)+"ms";io.observe(el)})};
+  marcar();new MutationObserver(marcar).observe(document.querySelector("main"),{childList:true,subtree:true});
+  const c=document.getElementById("cuenta");let prev=c.textContent;new MutationObserver(()=>{if(+c.textContent>+prev){c.classList.remove("salto");void c.offsetWidth;c.classList.add("salto")}prev=c.textContent}).observe(c,{childList:true,characterData:true,subtree:true})})();
+function modoOutlet(on){document.documentElement.classList.toggle("modo-outlet",on);scrollTo(0,0)}
+/* no depende de cambiar la dirección (en vistas previas y en Claude a veces está bloqueado) */
+document.addEventListener("click",e=>{const a=e.target.closest&&e.target.closest("a[href^='#']");if(!a)return;const h=a.getAttribute("href");const en=document.documentElement.classList.contains("modo-outlet");
+  if(h==="#outlet"){e.preventDefault();modoOutlet(true);try{history.pushState(null,"","#outlet")}catch(err){}}
+  else if(en){e.preventDefault();modoOutlet(false);try{history.pushState(null,"",h==="#inicio"?location.pathname:h)}catch(err){}const d=h!=="#inicio"&&document.querySelector(h);if(d)d.scrollIntoView()}});
+addEventListener("popstate",()=>modoOutlet(location.hash==="#outlet"));if(location.hash==="#outlet")modoOutlet(true);
+/* BORRADOR formato B: filtros por tipo arriba y una tarjeta por cada mate */
+let filtroOut="Todos";
+const tipoOut=p=>{const s=norm(p.n);return s.includes("galleta")?"Galletas":s.includes("camionero")?"Camioneros":s.includes("imperial")?"Imperiales":s.includes("torpedo")?"Torpedos":"Otros"};
+const TIPOS_OUT=["Camioneros","Imperiales","Torpedos","Galletas","Otros"];
+function pintarOutlet(outl){const hay=TIPOS_OUT.filter(t=>outl.some(p=>tipoOut(p)===t));if(filtroOut!=="Todos"&&!hay.includes(filtroOut))filtroOut="Todos";
+  const cuenta=t=>outl.filter(p=>t==="Todos"||tipoOut(p)===t).reduce((s,p)=>s+p.s,0);
+  const chips='<div class="chips out-chips" role="group" aria-label="Filtrar el outlet">'+["Todos"].concat(hay).map(t=>'<button class="chip" type="button" data-fo="'+t+'" aria-pressed="'+(t===filtroOut)+'">'+t+' <span class="out-n">'+cuenta(t)+"</span></button>").join("")+"</div>";
+  const vis=outl.filter(p=>filtroOut==="Todos"||tipoOut(p)===filtroOut);const g={},orden=[];vis.forEach(p=>{const k=p.pid||norm(p.n);if(!g[k]){g[k]=[];orden.push(k)}g[k].push(p)});
+  return chips+'<div class="out-mods">'+orden.map(k=>modeloOut(k,g[k])).join("")+"</div>"}
+/* una tarjeta por modelo: la foto grande arranca con la foto común y abajo hay una miniatura por cada mate con falla; al tocar una, la foto, la falla y el precio cambian a ese mate */
+const selOut={};
+function modeloOut(k,items){const p0=items[0],vb=VISTA[p0.pid]||{},uds=items.reduce((s,x)=>s+x.s,0),desde=Math.min.apply(null,items.map(x=>x.p));
+  const i=selOut[k]==null||selOut[k]>=items.length?-1:selOut[k],u=i>=0?items[i]:null;
+  const fotoComun=vb.img?'<img src="'+esc(vb.img)+'" alt="'+esc(p0.n)+'" loading="lazy">':svg(p0.t,p0.col);
+  const fotoDe=p=>p.fotoPropia?'<img src="'+esc(p.img)+'" alt="'+esc(p.n)+' con su falla" loading="lazy">':svg(p.t,p.col)+'<span class="om-pronto">Foto pronto</span>';
+  const fs=u?(u.fotoPropia?[u.img,u.img2].filter(Boolean):[]):[vb.img,vb.img2].filter(Boolean),fk=k+":"+i,fi=Math.min(fotoOut[fk]||0,Math.max(fs.length-1,0));
+  const flecha=(d,t)=>'<button type="button" class="om-fl '+(d<0?"izq":"der")+'" data-omf="'+esc(fk)+'" data-d="'+d+'" aria-label="'+t+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="'+(d<0?"M15 6l-6 6 6 6":"M9 6l6 6-6 6")+'"/></svg></button>';
+  const grande=fs.length?fs.map((f,j)=>'<img class="om-f'+(j===fi?" on":"")+'" src="'+esc(f)+'" alt="'+esc(p0.n)+(u?" con su falla":"")+'" loading="lazy">').join("")+(fs.length>1?flecha(-1,"Foto anterior")+flecha(1,"Foto siguiente")+'<span class="om-cont">'+(fi+1)+" / "+fs.length+"</span>":""):(u?fotoDe(u):fotoComun);
+  const minis='<div class="om-minis" role="group" aria-label="Elegí cuál ver">'+
+    '<button type="button" class="om-mini" data-oms="'+esc(k)+'" data-i="-1" aria-pressed="'+(i<0)+'" title="Foto del modelo">'+fotoComun+'<span>Modelo</span></button>'+
+    items.map((p,j)=>'<button type="button" class="om-mini" data-oms="'+esc(k)+'" data-i="'+j+'" aria-pressed="'+(i===j)+'" title="'+esc(p.f)+'">'+(p.fotoPropia?'<img src="'+esc(p.img)+'" alt="" loading="lazy">':svg(p.t,p.col))+"<span>Mate "+(j+1)+(p.s>1?" ×"+p.s:"")+"</span></button>").join("")+"</div>";
+  const precio=u?'<div class="om-precio">'+(u.o?'<span class="tachado">'+money(u.o)+"</span>":"")+'<div class="om-pfila"><span class="precio">'+money(u.p)+"</span>"+(u.o>u.p?'<span class="om-off">'+Math.round((1-u.p/u.o)*100)+'% <span translate="no">OFF</span></span>':"")+"</div></div>"
+    :'<div class="om-precio">'+(p0.o?'<span class="tachado">'+money(p0.o)+"</span>":"")+'<div class="om-pfila"><span class="precio">'+(items.some(x=>x.p!==desde)?"<small>desde</small> ":"")+money(desde)+"</span>"+(p0.o>desde?'<span class="om-off">'+Math.round((1-desde/p0.o)*100)+'% <span translate="no">OFF</span></span>':"")+"</div></div>";
+  const detalle=u?'<p class="om-sel"><span class="falla">'+esc(u.f)+"</span>"+(u.s>1?' <span class="om-x">'+u.s+" iguales</span>":"")+"</p>"+((u.fd?'<p class="om-fd">'+esc(u.fd)+"</p>":"")):'<p class="desc">'+uds+(uds===1?" mate":" mates")+' con alguna falla. Tocá uno abajo para ver qué tiene.</p>';
+  const boton=u?'<div data-btn="'+u.id+'">'+botonDe(u)+"</div>":'<button type="button" class="om-elegir" data-oms="'+esc(k)+'" data-i="0">Ver '+(items.length===1?"el mate":"el mate 1")+" con su falla</button>";
+  return'<article class="prod out-mod"><div class="foto om-grande'+(fs.length>1?" dos":"")+'" data-ficha="'+(u||p0).id+'">'+grande+'<span class="badge outlet notranslate" translate="no">Outlet</span>'+(u&&u.fotoPropia?'<span class="om-lupa"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5l5 5M10.5 7.5v6M7.5 10.5h6"/></svg>Ver de cerca</span>':"")+"</div>"+
+    minis+'<div class="info"><h3>'+esc(p0.n)+"</h3>"+detalle+precio+'<div class="pie">'+boton+"</div></div></article>"}
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-oms]");if(!b)return;selOut[b.dataset.oms]=+b.dataset.i;pintar()});
+/* flechitas de la foto: cambian de foto sin abrir la ficha */
+/* encuadre por foto: las fotos verticales del celular se recortan en cuadrado; acá se dice dónde queda el mate en cada una para que salga centrado (vertical: 0% arriba, 100% abajo) */
+const POS={"mate-galleta-1.jpg":"50% 80%","mate-galleta-2.jpg":"50% 75%","out008-1.jpg":"50% 54%","out008-2.jpg":"50% 71%","out003-1.jpg":"50% 68%","out003-2.jpg":"50% 48%","out004-1.jpg":"50% 60%","out004-2.jpg":"50% 72%","torpedo-uruguayo-2.jpg":"50% 50%","camionero-bajo-1.jpg":"50% 80%","camionero-bajo-2.jpg":"50% 64%"};
+const encuadrar=im=>{const k=(im.getAttribute("src")||"").split("/").pop();if(POS[k])im.style.objectPosition=POS[k]};
+document.addEventListener("load",e=>{if(e.target&&e.target.tagName==="IMG")encuadrar(e.target)},true);
+new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(n=>{if(n.nodeType!==1)return;if(n.tagName==="IMG")encuadrar(n);n.querySelectorAll&&n.querySelectorAll("img").forEach(encuadrar)}))).observe(document.body,{childList:true,subtree:true});
+const fotoOut={};
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-omf]");if(!b)return;e.preventDefault();e.stopPropagation();const box=b.closest(".om-grande"),imgs=[...box.querySelectorAll("img.om-f")];if(imgs.length<2)return;
+  let i=imgs.findIndex(x=>x.classList.contains("on"));i=(i+(+b.dataset.d)+imgs.length)%imgs.length;imgs.forEach((x,j)=>x.classList.toggle("on",j===i));fotoOut[b.dataset.omf]=i;const c=box.querySelector(".om-cont");if(c)c.textContent=(i+1)+" / "+imgs.length},true);
+document.addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("[data-fo]");if(!b)return;filtroOut=b.dataset.fo;pintar();const g=document.getElementById("grillaOutlet");if(g.getBoundingClientRect().top<0)g.scrollIntoView({behavior:"smooth"})});
 const ALL={};PRODUCTOS.concat(OUTLET).forEach(p=>ALL[p.id]=p);
 
 /* Ilustraciones de la marca (trazo carbón, relleno según el color del producto) */
@@ -904,15 +1109,17 @@ function botonDe(p){const q=cart[p.id]||0;
   if(!q)return'<button class="agregar" type="button" data-add="'+p.id+'">Agregar</button>';
   return'<div class="paso-cant"><button type="button" data-menos="'+p.id+'" aria-label="Quitar uno de '+esc(p.n)+'">−</button><span aria-live="polite">'+q+'</span><button type="button" data-mas="'+p.id+'" aria-label="Sumar otro '+esc(p.n)+'"'+(q>=p.s?" disabled":"")+'>+</button></div>'}
 function tarjeta(p){const sin=p.s<=0;
-  const badge=sin?'<span class="badge sin">Sin stock</span>':p.outlet?'<span class="badge outlet">Outlet</span>':p.s<=2?'<span class="badge ultimas">'+(p.s===1?"Queda 1":"Últimas "+p.s)+"</span>":"";
-  return'<article class="prod'+(sin?" agotado":"")+'"><div class="foto" data-ficha="'+p.id+'">'+badge+(p.img?'<img src="'+esc(p.img)+'" alt="'+esc(p.n)+'" loading="lazy">'+(p.img2?'<img class="f2" src="'+esc(p.img2)+'" alt="" loading="lazy">':''):svg(p.t,p.col))+'</div><div class="info"><span class="cat">'+esc(p.outlet?"Outlet":p.c)+'</span><h3><button type="button" class="ver" data-ficha="'+p.id+'">'+esc(p.n)+"</button></h3>"+
+  const badge=sin?'<span class="badge sin">Sin stock</span>':p.outlet?'<span class="badge outlet notranslate" translate="no">Outlet</span>':p.s<=2?'<span class="badge ultimas">'+(p.s===1?"Queda 1":"Últimas "+p.s)+"</span>":"";
+  return'<article class="prod'+(sin?" agotado":"")+'"><div class="foto" data-ficha="'+p.id+'">'+badge+(p.img?'<img src="'+esc(p.img)+'" alt="'+esc(p.n)+'" loading="lazy">'+(p.img2?'<img class="f2" src="'+esc(p.img2)+'" alt="" loading="lazy">':''):svg(p.t,p.col))+(p.oferta?'<span class="sticker-of" aria-label="Oferta, '+Math.round((1-p.p/p.o)*100)+'% menos">'+Math.round((1-p.p/p.o)*100)+'% <span translate="no">OFF</span></span>':"")+'</div><div class="info"><span class="cat"'+(p.outlet?' translate="no"':"")+'>'+esc(p.outlet?"Outlet":p.c)+'</span><h3><button type="button" class="ver" data-ficha="'+p.id+'">'+esc(p.n)+"</button></h3>"+
    (p.outlet?'<span class="falla">'+esc(p.f)+"</span>":(p.d?'<p class="desc">'+esc(p.d)+"</p>":""))+
-   '<div class="pie"><span class="precio">'+(p.outlet&&p.o?'<span class="tachado">'+money(p.o)+"</span>":"")+money(p.p)+'</span><div data-btn="'+p.id+'">'+botonDe(p)+"</div></div></div></article>"}
+   '<div class="pie"><span class="precio">'+(p.o?'<span class="tachado">'+money(p.o)+"</span>":"")+money(p.p)+'</span><div data-btn="'+p.id+'">'+botonDe(p)+"</div></div></div></article>"}
 const orden=(a,b)=>(a.s<=0)-(b.s<=0);
 /* búsqueda: sin tildes ni mayúsculas, todas las palabras tienen que aparecer */
 let busqueda="",ordenSel="dest";
 const numCod=p=>parseInt(String(p.id).replace(/[^0-9]/g,""),10)||0;
-const ORDEN={dest:(a,b)=>0,pmen:(a,b)=>a.p-b.p,pmay:(a,b)=>b.p-a.p,az:(a,b)=>a.n.localeCompare(b.n,"es"),za:(a,b)=>b.n.localeCompare(a.n,"es"),nuevo:(a,b)=>numCod(b)-numCod(a),viejo:(a,b)=>numCod(a)-numCod(b),vend:(a,b)=>(b.v||0)-(a.v||0)};
+/* BORRADOR: por defecto, agrupado por categoría (mates, bombillas, termos, canastas, yerbas, accesorios) y dentro de mates por tipo */
+const catNum=p=>{const x=DATOS.productos.find(y=>y.id===p.id);return x?parseInt(x.cat,10)||99:99};
+const ORDEN={dest:(a,b)=>CATS.indexOf(a.c)-CATS.indexOf(b.c)||catNum(a)-catNum(b)||(b.v||0)-(a.v||0),pmen:(a,b)=>a.p-b.p,pmay:(a,b)=>b.p-a.p,az:(a,b)=>a.n.localeCompare(b.n,"es"),za:(a,b)=>b.n.localeCompare(a.n,"es"),nuevo:(a,b)=>numCod(b)-numCod(a),viejo:(a,b)=>numCod(a)-numCod(b),vend:(a,b)=>(b.v||0)-(a.v||0)};
 const norm=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
 const coincide=p=>{if(!busqueda)return true;const txt=norm([p.n,p.c,p.d,p.f,p.outlet?"outlet":""].join(" "));return norm(busqueda).split(/\s+/).filter(Boolean).every(w=>txt.includes(w.replace(/s$/,"")))};
 function pintar(){
@@ -921,8 +1128,8 @@ function pintar(){
   const outl=OUTLET.filter(coincide).slice().sort((a,b)=>ORDEN[ordenSel](a,b));
   let r=$("resultados");if(!r){r=document.createElement("p");r.id="resultados";r.className="resultados";r.setAttribute("aria-live","polite");$("grilla").before(r)}
   r.hidden=!busqueda;r.textContent=busqueda?(lista.length+outl.length)+" resultado"+(lista.length+outl.length===1?"":"s")+" para «"+busqueda.trim()+"»"+(filtro!=="Todos"?" en "+filtro:"")+(outl.length?" ("+outl.length+" en el outlet)":""):"";
-  $("grilla").innerHTML=lista.length?lista.map(tarjeta).join(""):busqueda?'<p class="nota">No encontramos «'+esc(busqueda.trim())+'» en el catálogo. <a href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hola OnlyMate! ¿Tienen "+busqueda.trim()+"?")+'" target="_blank" rel="noopener" style="font-weight:700">Preguntanos por WhatsApp</a>.</p>':'<p class="nota">No hay productos en esta categoría por ahora.</p>';
-  if($("grillaOutlet"))$("grillaOutlet").innerHTML=outl.length?outl.map(tarjeta).join(""):busqueda?'<p class="nota">Nada del outlet coincide con tu búsqueda.</p>':'<p class="nota">Ahora no hay nada en el outlet. Volvé pronto.</p>';
+  $("grilla").innerHTML=lista.length?lista.map((p,i)=>(filtro==="Todos"&&ordenSel==="dest"&&!busqueda&&(i===0||lista[i-1].c!==p.c)?'<h3 class="cat-tit">'+esc(p.c)+"</h3>":"")+tarjeta(p)).join(""):busqueda?'<p class="nota">No encontramos «'+esc(busqueda.trim())+'» en el catálogo. <a href="https://wa.me/'+WA+'?text='+encodeURIComponent("Hola OnlyMate! ¿Tienen "+busqueda.trim()+"?")+'" target="_blank" rel="noopener" style="font-weight:700">Preguntanos por WhatsApp</a>.</p>':'<p class="nota">No hay productos en esta categoría por ahora.</p>';
+  if($("grillaOutlet"))$("grillaOutlet").innerHTML=outl.length?pintarOutlet(outl):busqueda?'<p class="nota">Nada del outlet coincide con tu búsqueda.</p>':'<p class="nota">Ahora no hay nada en el outlet. Volvé pronto.</p>';
   pintarCarrito()}
 function abrirBuscador(){$("buscador").hidden=false;$("lupa").setAttribute("aria-expanded","true");$("q").focus()}
 function cerrarBuscador(){$("buscador").hidden=true;$("lupa").setAttribute("aria-expanded","false");if(busqueda){busqueda="";$("q").value="";pintar()}$("lupa").focus()}
@@ -954,7 +1161,7 @@ function pedidoTexto(){const L=Object.entries(cart).filter(([,q])=>q>0);let t="H
   t+="Pago: "+(pago()==="transf"?"transferencia o Mercado Pago (te mando el comprobante)":"efectivo, a coordinar");return t}
 function pintarCarrito(){const L=Object.entries(cart).filter(([,q])=>q>0);const n=L.reduce((s,[,q])=>s+q,0);const tot=total();
   $("cuenta").textContent=n;$("barraN").textContent=n;$("barraT").textContent=money(tot);$("barra").hidden=!n||!$("panel").hidden;
-  $("items").innerHTML=L.length?L.map(([id,q])=>{const p=ALL[id];return'<div class="item"><div><b>'+esc(p.n)+'</b><div class="sub">'+(p.outlet?"Outlet · ":"")+money(p.p)+' c/u</div></div><div class="cant"><button type="button" data-menos="'+id+'" aria-label="Quitar uno de '+esc(p.n)+'">−</button><span>'+q+'</span><button type="button" data-mas="'+id+'" aria-label="Sumar uno de '+esc(p.n)+'"'+(q>=p.s?" disabled":"")+'>+</button></div></div>'}).join("")
+  $("items").innerHTML=L.length?L.map(([id,q])=>{const p=ALL[id];return'<div class="item"><div><b>'+esc(p.n)+'</b><div class="sub">'+(p.outlet?'<span translate="no" class="notranslate">Outlet</span> · ':"")+money(p.p)+' c/u</div></div><div class="cant"><button type="button" data-menos="'+id+'" aria-label="Quitar uno de '+esc(p.n)+'">−</button><span>'+q+'</span><button type="button" data-mas="'+id+'" aria-label="Sumar uno de '+esc(p.n)+'"'+(q>=p.s?" disabled":"")+'>+</button></div></div>'}).join("")
     :'<div class="vacio"><svg class="iso-deco iso-vacio" aria-hidden="true"><use href="#iso3d"/></svg><b>Tu carrito está vacío</b><br>Sumá productos desde el catálogo.</div>';
   $("checkout").hidden=!L.length;$("panelFoot").hidden=!L.length;
   const correo=ent()==="correo";
@@ -988,7 +1195,7 @@ function pintarFicha(){const p=ALL[fichaId];if(!p)return;const raw=baseDe(p);con
   const gal='<div class="f-galeria'+(fotos.length>1?"":" una")+'">'+(fotos.length>1?'<div class="fg-minis">'+fotos.map((f,i)=>'<button type="button" class="fg-mini" data-fg="'+i+'" aria-label="Ver foto '+(i+1)+'" aria-pressed="'+(i===fichaFoto)+'"><img src="'+esc(f)+'" alt=""></button>').join("")+"</div>":"")+
     '<div class="fg-marco"><div class="fg-pista" id="fgPista">'+(fotos.length?fotos.map((f,i)=>'<div class="fg-foto zoom"><img src="'+esc(f)+'" alt="'+esc(p.n)+(fotos.length>1?", foto "+(i+1)+" de "+fotos.length:"")+'"></div>').join(""):'<div class="fg-foto">'+svg(p.t,p.col)+"</div>")+"</div>"+
     (fotos.length>1?'<button type="button" class="redondo fg-flecha izq" data-fgmov="-1" aria-label="Foto anterior">‹</button><button type="button" class="redondo fg-flecha der" data-fgmov="1" aria-label="Foto siguiente">›</button><span class="fg-n" id="fgN">1 / '+fotos.length+"</span>":"")+"</div></div>";
-  const precio='<div class="f-precio">'+(p.outlet&&p.o?'<span class="tachado">Antes '+money(p.o)+"</span>":"")+"<span>"+money(p.p)+"</span>"+(p.outlet&&p.o>p.p?'<span class="off">'+Math.round((1-p.p/p.o)*100)+"% OFF</span>":"")+"</div>";
+  const precio='<div class="f-precio">'+(p.o?'<span class="tachado">Antes '+money(p.o)+"</span>":"")+"<span>"+money(p.p)+"</span>"+(p.o>p.p?'<span class="off">'+Math.round((1-p.p/p.o)*100)+"% OFF</span>":"")+"</div>";
   const boton=max?'<button type="button" class="agregar grande" data-fadd="1">Agregar al carrito</button>':'<button type="button" class="agregar grande" disabled>Ya está todo en tu carrito</button>';
   const comprar='<div class="f-comprar">'+(max>1?'<div class="paso-cant" role="group" aria-label="Cantidad"><button type="button" data-fq="-1" aria-label="Uno menos"'+(fichaQ<=1?" disabled":"")+'>−</button><span aria-live="polite">'+fichaQ+'</span><button type="button" data-fq="1" aria-label="Uno más"'+(fichaQ>=max?" disabled":"")+">+</button></div>":"")+boton+"</div>"+
     (enCarro?'<p class="f-ya">Ya tenés '+enCarro+" en el carrito. <button type=\"button\" data-ver=\"1\">Ver pedido</button></p>":"");
@@ -999,11 +1206,11 @@ function pintarFicha(){const p=ALL[fichaId];if(!p)return;const raw=baseDe(p);con
   const recordatorio=cur?'<aside class="f-recuerda"><span class="fr-t"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.2 5.4 5.8.5-4.4 3.8 1.4 5.7L12 15.3 7 18.4l1.4-5.7L4 8.9l5.8-.5z"/></svg>Cada mate es único</span><p>El tamaño y la forma pueden cambiar un poco de uno a otro. Si querés ver el tuyo antes, te mandamos fotos por WhatsApp.</p><a href="https://wa.me/'+WA+"?text="+encodeURIComponent("Hola OnlyMate! ¿Me mandan fotos del "+p.n+" que me llegaría?")+'" target="_blank" rel="noopener">Pedir fotos del mío</a></aside>':"";
   const rel=PRODUCTOS.filter(x=>x.id!==p.id&&x.c===(p.outlet?"Mates":p.c)).sort((a,b)=>(b.v||0)-(a.v||0));
   const mas=rel.concat(PRODUCTOS.filter(x=>x.id!==p.id&&!rel.includes(x))).slice(0,4);
-  $("fichaIn").innerHTML='<div class="ficha-top">'+gal+'<div class="f-info"><span class="migas">'+esc(p.outlet?"Outlet":p.c)+(sub&&!p.outlet?" › "+esc(sub):"")+'</span><h2 id="fNombre">'+esc(p.n)+"</h2>"+stockTxt(p)+(()=>{const R=RESENAS.filter(r=>r.pid===p.id);if(!R.length)return"";const pr=promedio(R);return'<button type="button" class="f-rating" data-fres="1">'+estrellas(Math.round(pr),"Promedio "+coma(pr)+" de 5")+"<span>"+coma(pr)+" · "+R.length+" reseña"+(R.length===1?"":"s")+"</span></button>"})()+precio+
+  $("fichaIn").innerHTML='<div class="ficha-top">'+gal+'<div class="f-info"><span class="migas"'+(p.outlet?' translate="no"':"")+'>'+esc(p.outlet?"Outlet":p.c)+(sub&&!p.outlet?" › "+esc(sub):"")+'</span><h2 id="fNombre">'+esc(p.n)+"</h2>"+stockTxt(p)+(()=>{const R=RESENAS.filter(r=>r.pid===p.id);if(!R.length)return"";const pr=promedio(R);return'<button type="button" class="f-rating" data-fres="1">'+estrellas(Math.round(pr),"Promedio "+coma(pr)+" de 5")+"<span>"+coma(pr)+" · "+R.length+" reseña"+(R.length===1?"":"s")+"</span></button>"})()+precio+
     '<p class="f-pago">Pagás por transferencia o Mercado Pago al alias <b>onlymate</b>, o en efectivo si retirás en Neuquén.</p>'+comprar+wa+benef+"</div></div>"+
     '<div class="f-bajo'+(cur?" dos":"")+'"><div><h3>Descripción</h3>'+(desc?"<p>"+esc(desc)+"</p>":"")+(p.outlet?"<p>Es un producto del outlet: tiene una falla ("+esc(p.f.toLowerCase())+") y por eso sale más barato. Si querés más fotos de la falla, escribinos.</p>":"")+notas+(()=>{const R=RESENAS.filter(r=>r.pid===p.id);return R.length?'<div class="f-res" id="fRes"><h3>Reseñas de este producto</h3>'+R.map(r=>itemRes(r,false)).join("")+"</div>":""})()+"</div>"+recordatorio+"</div>"+
     (mas.length?'<div class="f-rel"><h3>También te puede gustar</h3><div class="f-rel-g">'+mas.map(miniCard).join("")+"</div></div>":"")+
-    '<div class="f-barra"><span class="fb-p">'+money(p.p)+"<small>"+(enCarro?"En tu carrito: "+enCarro:p.outlet?"Outlet":"Stock disponible")+"</small></span>"+(max?'<button type="button" class="agregar" data-fadd="1">Agregar'+(fichaQ>1?" "+fichaQ:"")+"</button>":'<button type="button" class="agregar" data-ver="1">Ver pedido</button>')+"</div>";
+    '<div class="f-barra"><span class="fb-p">'+money(p.p)+"<small>"+(enCarro?"En tu carrito: "+enCarro:p.outlet?'<span translate="no" class="notranslate">Outlet</span>':"Stock disponible")+"</small></span>"+(max?'<button type="button" class="agregar" data-fadd="1">Agregar'+(fichaQ>1?" "+fichaQ:"")+"</button>":'<button type="button" class="agregar" data-ver="1">Ver pedido</button>')+"</div>";
   const pista=$("fgPista");if(fotos.length>1){pista.scrollLeft=fichaFoto*pista.clientWidth;marcarFoto();pista.addEventListener("scroll",()=>{const i=Math.round(pista.scrollLeft/pista.clientWidth);if(i!==fichaFoto){fichaFoto=i;marcarFoto()}},{passive:true})}
   pista.querySelectorAll(".fg-foto.zoom").forEach(f=>{const im=f.querySelector("img");
     f.addEventListener("mousemove",e=>{if(!matchMedia("(hover:hover) and (pointer:fine)").matches)return;const r=f.getBoundingClientRect();im.style.transformOrigin=((e.clientX-r.left)/r.width*100)+"% "+((e.clientY-r.top)/r.height*100)+"%";im.style.transform="scale(2.2)"});
